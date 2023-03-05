@@ -1,6 +1,6 @@
 # project-folklore
 Project Folklore repository untuk project collaboration pada unity  
-Saat ini sedang mengerjakan cerita kerajaan Singhasari dengan fokusan cerita Ken Arok
+Saat ini sedang mengerjakan cerita tentang kerajaan Singhasari dengan fokusan cerita Ken Arok
 
 Nama Game: Project Folklore-Singhasari  
 Genre: Adventure, Historical, RPG  
