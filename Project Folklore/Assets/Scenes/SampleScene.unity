@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 110455718}
   m_Layer: 5
-  m_Name: MP Fill Area
+  m_Name: AP Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 230461443}
   - component: {fileID: 230461442}
   m_Layer: 5
-  m_Name: MP Background
+  m_Name: AP Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -601,7 +601,7 @@ GameObject:
   - component: {fileID: 258611979}
   - component: {fileID: 258611978}
   m_Layer: 5
-  m_Name: Mana Point Text (TMP)
+  m_Name: Action Point Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'MP :'
+  m_text: 'AP :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1307,7 +1307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 310163175}
   m_Layer: 5
-  m_Name: MP Handle Slide Area
+  m_Name: AP Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3510,7 +3510,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &846032239
 GameObject:
@@ -5523,7 +5523,7 @@ RectTransform:
   m_Children:
   - {fileID: 466118092}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5542,7 +5542,7 @@ GameObject:
   - component: {fileID: 1449900353}
   - component: {fileID: 1449900352}
   m_Layer: 5
-  m_Name: MP Handle
+  m_Name: AP Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5755,7 +5755,7 @@ GameObject:
   - component: {fileID: 1504024395}
   - component: {fileID: 1504024394}
   m_Layer: 5
-  m_Name: MP Fill
+  m_Name: AP Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6751,7 +6751,7 @@ GameObject:
   - component: {fileID: 2046876888}
   - component: {fileID: 2046876889}
   m_Layer: 5
-  m_Name: MP Bar
+  m_Name: AP Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6801,7 +6801,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.082858644, g: 0.24915923, b: 0.9245283, a: 1}
+    m_NormalColor: {r: 0.9254902, g: 0.86213523, b: 0.08235295, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6825,9 +6825,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1449900351}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 50
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
