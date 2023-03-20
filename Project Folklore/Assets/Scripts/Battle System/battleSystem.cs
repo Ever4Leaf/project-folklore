@@ -7,9 +7,10 @@ public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOSE}
 
 public class battleSystem : MonoBehaviour
 {
-    public GameObject palyerPrefab;
+    public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
+    public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
     public BattleState state;
@@ -23,7 +24,8 @@ public class battleSystem : MonoBehaviour
 
     private void setupBattle()
     {
-        throw new NotImplementedException();
+        Instantiate(playerPrefab, playerBattleStation);
+        Instantiate(enemyPrefab, enemyBattleStation);
     }
 
     // Update is called once per frame
