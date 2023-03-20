@@ -6,6 +6,9 @@ using Ink.Runtime;
 
 public class DialogueManager : MonoBehaviour
 {
+    [Header("Params")]
+    [SerializeField] private float typingSpeed = 0.04f;
+
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
@@ -17,6 +20,11 @@ public class DialogueManager : MonoBehaviour
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
 
+    private bool canContinueToNextLine = false;
+    private bool canSkip = false;
+    private bool submitSkip;
+
+    private Coroutine displayLineCoroutine;
 
     private static DialogueManager instance;
 
@@ -50,13 +58,18 @@ public class DialogueManager : MonoBehaviour
 
     private void Update() 
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            submitSkip = true;
+        }
+
        //return if dialogue not playing
        if(!dialogueIsPlaying)
        {
             return;
        }
 
-       if(Input.GetMouseButtonDown(0))
+       if(canContinueToNextLine && Input.GetMouseButtonDown(0))
        {
             ContinueStory();
        }
@@ -83,7 +96,12 @@ public class DialogueManager : MonoBehaviour
         if(currentStory.canContinue)
         {
             //set text for the current dialogue line
-            dialogueText.text = currentStory.Continue();
+            if(displayLineCoroutine != null)
+            {
+                StopCoroutine(displayLineCoroutine);
+            }
+
+            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
             //handle tags
             HandleTags(currentStory.currentTags);
         }
@@ -91,6 +109,41 @@ public class DialogueManager : MonoBehaviour
         {
             ExitDialogueMode();
         }
+    }
+
+    private IEnumerator DisplayLine(string line)
+    {
+        //empty the dialogue text
+        dialogueText.text = "";
+        canContinueToNextLine = false;
+        submitSkip = false;
+
+        StartCoroutine(CanSkip());
+
+        //display each letter one at a time
+        foreach(char letter in line.ToCharArray())
+        {
+            //if the submit button it pressed, finish up displaying line right away
+            if(canSkip && submitSkip)
+            {
+                submitSkip = false;
+                dialogueText.text = line;
+                break;
+            }
+
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        canContinueToNextLine = true;
+        canSkip = false;
+    }
+
+    private IEnumerator CanSkip()
+    {
+        canSkip = false;
+        yield return new WaitForSeconds(0.05f);
+        canSkip = true;
     }
 
     private void HandleTags(List<string> currentTags)
