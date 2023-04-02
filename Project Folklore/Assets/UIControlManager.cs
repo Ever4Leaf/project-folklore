@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MenuScreenManager : MonoBehaviour
+public class UIControlManager : MonoBehaviour
 {
     public Transform headSet;
-    public float spawnDistance = 2f;
+    public float spawnDistance;
 
     public GameObject mainMenu;
     public InputActionProperty showButton;
@@ -20,7 +20,7 @@ public class MenuScreenManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (showButton.action.WasPressedThisFrame())
+        if (showButton.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Q))
         {
             mainMenu.SetActive(!mainMenu.activeSelf);
 
