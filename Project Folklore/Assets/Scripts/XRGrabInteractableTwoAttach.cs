@@ -5,15 +5,21 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRGrabInteractableTwoAttach : XRGrabInteractable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Transform rightAttachTransform;
+    public Transform leftAttachTransform;
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
-        
+        if (args.interactorObject.transform.CompareTag("Right Hand"))
+        {
+            attachTransform = rightAttachTransform;
+        } 
+        else if (args.interactorObject.transform.CompareTag("Left Hand"))
+        {
+            attachTransform = leftAttachTransform;
+        }
+
+
+        base.OnSelectEntered(args);
     }
 }
