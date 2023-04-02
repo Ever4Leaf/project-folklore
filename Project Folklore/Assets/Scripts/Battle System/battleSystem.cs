@@ -8,7 +8,7 @@ public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOSE}
 public class battleSystem : MonoBehaviour
 {
     //Prefab for player && enemy
-    public GameObject playerPrefab;
+    //public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
     //Getting 3D position of player && enemy battle station (for spawning prefab)
@@ -20,8 +20,8 @@ public class battleSystem : MonoBehaviour
     unitModifier enemyUnit;
 
     //Battle HUD for player && enemy
-    public battleHUD playerHUD;
-    public battleHUD enemyHUD;
+    //public battleHUD playerHUD;
+    //public battleHUD enemyHUD;
 
     //States of battle
     public BattleState state;
@@ -35,14 +35,14 @@ public class battleSystem : MonoBehaviour
 
     private void setupBattle()
     {
-        GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
-        playerUnit = playerGO.GetComponent<unitModifier>();
+        //GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
+        //playerUnit = playerGO.GetComponent<unitModifier>();
 
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
         enemyUnit = enemyGO.GetComponent<unitModifier>();
 
-        playerHUD.setHUD(playerUnit);
-        enemyHUD.setHUD(enemyUnit);
+        //playerHUD.setHUD(playerUnit);
+        //enemyHUD.setHUD(enemyUnit);
     }
 
 }
