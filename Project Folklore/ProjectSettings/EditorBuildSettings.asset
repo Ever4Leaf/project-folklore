@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 218c591a419f50046a466056d18c585a
+  - enabled: 1
+    path: Assets/Scenes/DialogueScene.unity
+    guid: 2c765cc98947b7447885eccda57c893f
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2bf12d07d099f3b4d8e0d9aea26b8395, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 660d4f3790aae2544a77b8c4f8dc559e, type: 2}
