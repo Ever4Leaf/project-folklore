@@ -50,6 +50,7 @@ MonoBehaviour:
   currentHP: 100
   maxAP: 10
   currentAP: 10
-  attackStat: 10
+  attackStat: 30
   defendStat: 15
   speedStat: 3
+  recoveryStat: 20

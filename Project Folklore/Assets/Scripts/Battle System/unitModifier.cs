@@ -21,6 +21,7 @@ public class unitModifier : MonoBehaviour
     public int defendStat;
     public int speedStat;
     public int recoveryStat;
+    public int costAP;
 
     /*[Header("Unit Un-Modifiable Stats")]
     [SerializeField] private float moveMultiplier = 1.0f;
@@ -67,5 +68,16 @@ public class unitModifier : MonoBehaviour
 
         if (currentHP > maxHP)
             currentHP = maxHP;
+    }
+
+    public bool onMoveUse(int costAP)
+    {
+        if (currentAP >= costAP)
+        {
+            currentAP -= costAP;
+            return true;
+        }
+        else
+            return false;
     }
 }

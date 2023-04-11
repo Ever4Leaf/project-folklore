@@ -53,3 +53,5 @@ MonoBehaviour:
   attackStat: 15
   defendStat: 20
   speedStat: 5
+  recoveryStat: 20
+  costAP: 5

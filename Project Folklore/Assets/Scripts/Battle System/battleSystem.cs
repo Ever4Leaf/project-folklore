@@ -155,7 +155,7 @@ public class battleSystem : MonoBehaviour
         }
         else if (state == BattleState.PLAYERTURN)
         {
-            StartCoroutine(playerAttack());
+            StartCoroutine(playerHeal());
             battleDialogueText.text = playerUnit.unitName + " used Heal";
         }
     }
@@ -170,6 +170,9 @@ public class battleSystem : MonoBehaviour
         //DAMAGE THE ENEMY
         bool isDead = enemyUnit.takeDamage(playerUnit.attackStat);
         enemyHUD.setHP(enemyUnit.currentHP);
+
+        bool isCanUseMove = playerUnit.onMoveUse(playerUnit.costAP);
+        playerHUD.setAP(playerUnit.currentAP);
 
         battleDialogueText.text = enemyUnit.unitName + " take " + playerUnit.attackStat + " damage";
         yield return new WaitForSeconds(waitTime);
@@ -201,7 +204,7 @@ public class battleSystem : MonoBehaviour
 
         //HEAL PLAYER FOR...
         playerUnit.recoverHP(playerUnit.recoveryStat);
-        battleDialogueText.text = playerUnit.attackStat + " recover " + playerUnit.recoveryStat + " HP";
+        battleDialogueText.text = playerUnit.unitName + " recover " + playerUnit.recoveryStat + " HP";
         playerHUD.setHP(playerUnit.currentHP);
         yield return new WaitForSeconds(waitTime);
 
