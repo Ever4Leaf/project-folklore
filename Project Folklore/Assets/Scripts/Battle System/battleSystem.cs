@@ -7,7 +7,7 @@ using TMPro;
 
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST, CHANGETURNTRANSITION, CHOOSETARGET }
 
-public class battleSystem : MonoBehaviour
+public class BattleSystem : MonoBehaviour
 {
     //Prefab for player && enemy
     [Header("Prefab Entity")]
@@ -21,22 +21,24 @@ public class battleSystem : MonoBehaviour
 
     //Battle HUD for player && enemy
     [Header("Battle HUD")]
-    public battleHUD playerHUD;
-    public battleHUD enemyHUD;
+    public BattleHUD playerHUD;
+    public BattleHUD enemyHUD;
 
     //States of battle
     [Header("State of the Battle")]
     public BattleState state;
+    [SerializeField] private int turnValue = 0;
     public TextMeshProUGUI battleDialogueText;
     public TextMeshProUGUI battleStateText;
+    public TextMeshProUGUI battleTurn;
 
     //Other Settings
     [Header("Other Settings")]
     public float waitTime = 2f;
 
     //containing the unitModifier class for player && enemy unit
-    unitModifier playerUnit;
-    unitModifier enemyUnit;
+    UnitModifier playerUnit;
+    UnitModifier enemyUnit;
 
     //Battle Setup
     void Start()
@@ -48,16 +50,20 @@ public class battleSystem : MonoBehaviour
 
     private void setupBattle()
     {
+        //Instantiate Player && Enemies
         GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
-        playerUnit = playerGO.GetComponent<unitModifier>();
+        playerUnit = playerGO.GetComponent<UnitModifier>();
 
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
-        enemyUnit = enemyGO.GetComponent<unitModifier>();
+        enemyUnit = enemyGO.GetComponent<UnitModifier>();
 
+        //Set HUD for Player && Enemies
         playerHUD.setHUD(playerUnit);
         enemyHUD.setHUD(enemyUnit);
 
+        //Setup Announcer
         battleDialogueText.text = "A Wild " + enemyUnit.unitName + " Is Approaching...";
+        battleTurn.text = "Turn" + turnValue;
 
         state = BattleState.PLAYERTURN;
         Debug.Log(state);
@@ -72,6 +78,7 @@ public class battleSystem : MonoBehaviour
 
         if (state == BattleState.PLAYERTURN)
         {
+            updateTurn();
             playerTurn();
         }
         else if (state == BattleState.ENEMYTURN)
@@ -227,5 +234,12 @@ public class battleSystem : MonoBehaviour
             battleDialogueText.text = playerUnit.unitName + " Lost the battle";
             battleStateText.text = "BATTLE END";
         }
+    }
+
+    //Announcer Update
+    public void updateTurn()
+    {
+        turnValue++;
+        battleTurn.text = "TURN " + turnValue;
     }
 }

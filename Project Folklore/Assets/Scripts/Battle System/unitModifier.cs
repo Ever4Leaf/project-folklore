@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class unitModifier : MonoBehaviour
+public class UnitModifier : MonoBehaviour
 {
     [Header("Unit Information")]
     //Generic information

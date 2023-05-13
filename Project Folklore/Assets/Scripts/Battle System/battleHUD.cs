@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 
 //Head-Up Display (status bar) for player and/or enemy
-public class battleHUD : MonoBehaviour
+public class BattleHUD : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI levelText;
     public Slider hpSlider;
     public Slider apSlider;
 
-    public void setHUD(unitModifier unitMod)
+    public void setHUD(UnitModifier unitMod)
     {
         nameText.text = unitMod.unitName;
         levelText.text = "Lvl." + unitMod.unitLevel;
