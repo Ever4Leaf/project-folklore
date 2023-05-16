@@ -34,12 +34,17 @@ public class BattleStateMachine : MonoBehaviour
     public GameObject enemyButton;
     public Transform spacer;
 
+    public GameObject actionPanel;
+    public GameObject enemySelectPanel;
+
     // Start is called before the first frame update
     void Start()
     {
         curr_battleState = BattleStates.WAIT;
         GetPlayerGO();
         GetEnemyGO();
+
+        playerInput = PlayerGUI.ACTIVATE;
 
         EnemyButtons();
     }
@@ -61,7 +66,7 @@ public class BattleStateMachine : MonoBehaviour
                     
                     if(performList[0].attackerType == "Player")
                     {
-                        //PlayerStateMachine playerStateMachine = actionPerformer.GetComponent<PlayerStateMachine>();
+                        PlayerStateMachine playerStateMachine = actionPerformer.GetComponent<PlayerStateMachine>();
                     }
 
                     if (performList[0].attackerType == "Enemy")
@@ -75,6 +80,29 @@ public class BattleStateMachine : MonoBehaviour
                 break;
 
             case (BattleStates.PERFORMACTION):
+
+                break;
+        }
+
+        switch (playerInput)
+        {
+            case (PlayerGUI.ACTIVATE):
+
+                break;
+
+            case (PlayerGUI.WAITING):
+
+                break;
+
+            case (PlayerGUI.INPUT1):
+
+                break;
+
+            case (PlayerGUI.INPUT2):
+
+                break;
+
+            case (PlayerGUI.DONE):
 
                 break;
         }

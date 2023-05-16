@@ -4439,7 +4439,7 @@ GameObject:
   - component: {fileID: 880964687}
   - component: {fileID: 880964686}
   m_Layer: 5
-  m_Name: Panel Action Extention
+  m_Name: Panel Select Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7590,6 +7590,8 @@ MonoBehaviour:
   playerManager: []
   enemyButton: {fileID: 6948671012458309843, guid: bed9b78f663fa264ea7efce1b10f6bf7, type: 3}
   spacer: {fileID: 2103858516}
+  actionPanel: {fileID: 121948726}
+  enemySelectPanel: {fileID: 880964684}
 --- !u!4 &1723277603
 Transform:
   m_ObjectHideFlags: 0
