@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST, CHANGETURNTRANSITION, CHOOSETARGET }
+public enum GameState { START, PLAYERTURN, ENEMYTURN, WON, LOST, CHANGETURNTRANSITION, CHOOSETARGET }
 
 public class BattleSystem : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class BattleSystem : MonoBehaviour
 
     //States of battle
     [Header("State of the Battle")]
-    public BattleState state;
+    public GameState state;
     [SerializeField] private int turnValue = 0;
     public TextMeshProUGUI battleDialogueText;
     public TextMeshProUGUI battleStateText;
@@ -43,7 +43,7 @@ public class BattleSystem : MonoBehaviour
     //Battle Setup
     void Start()
     {
-        state = BattleState.START;
+        state = GameState.START;
         Debug.Log(state);
         setupBattle();
     }
@@ -65,7 +65,7 @@ public class BattleSystem : MonoBehaviour
         battleDialogueText.text = "A Wild " + enemyUnit.unitName + " Is Approaching...";
         battleTurn.text = "Turn" + turnValue;
 
-        state = BattleState.PLAYERTURN;
+        state = GameState.PLAYERTURN;
         Debug.Log(state);
         StartCoroutine(changeTurnTransition());
     }
@@ -76,12 +76,12 @@ public class BattleSystem : MonoBehaviour
         battleStateText.text = "STAND BY";
         yield return new WaitForSeconds(2f);   
 
-        if (state == BattleState.PLAYERTURN)
+        if (state == GameState.PLAYERTURN)
         {
             updateTurn();
             playerTurn();
         }
-        else if (state == BattleState.ENEMYTURN)
+        else if (state == GameState.ENEMYTURN)
         {
             StartCoroutine(enemyTurn());
         }
@@ -114,14 +114,14 @@ public class BattleSystem : MonoBehaviour
         if (isDead == true)
         {
             //END BATTLE
-            state = BattleState.LOST;
+            state = GameState.LOST;
             Debug.Log(state);
             endBattle();
         }
         else if (isDead == false)
         {
             //CHANGE TO PLAYER TURN
-            state = BattleState.PLAYERTURN;
+            state = GameState.PLAYERTURN;
             Debug.Log(state);
             StartCoroutine(changeTurnTransition());
         }
@@ -143,11 +143,11 @@ public class BattleSystem : MonoBehaviour
     //PLAYER ACTION
     public void onAttackButton()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state != GameState.PLAYERTURN)
         {
             return;
         }
-        else if (state == BattleState.PLAYERTURN)
+        else if (state == GameState.PLAYERTURN)
         {
             StartCoroutine(playerAttack());
             battleDialogueText.text = playerUnit.unitName + " used Attack";
@@ -156,11 +156,11 @@ public class BattleSystem : MonoBehaviour
 
     public void onHealButton()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state != GameState.PLAYERTURN)
         {
             return;
         }
-        else if (state == BattleState.PLAYERTURN)
+        else if (state == GameState.PLAYERTURN)
         {
             StartCoroutine(playerHeal());
             battleDialogueText.text = playerUnit.unitName + " used Heal";
@@ -170,7 +170,7 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator playerAttack()
     {
         //IMMEDIATELY CHANGE STATE
-        state = BattleState.CHANGETURNTRANSITION;
+        state = GameState.CHANGETURNTRANSITION;
         Debug.Log(state);
         yield return new WaitForSeconds(waitTime);
 
@@ -189,14 +189,14 @@ public class BattleSystem : MonoBehaviour
         if (isDead == true)
         {
             //END BATTLE
-            state = BattleState.WON;
+            state = GameState.WON;
             Debug.Log(state);
             endBattle();
         }
         else if (isDead == false)
         {
             //CHANGE TO ENEMY TURN
-            state = BattleState.ENEMYTURN;
+            state = GameState.ENEMYTURN;
             Debug.Log(state);
             StartCoroutine(changeTurnTransition());
         }
@@ -205,7 +205,7 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator playerHeal()
     {
         //IMMEDIATELY CHANGE STATE
-        state = BattleState.CHANGETURNTRANSITION;
+        state = GameState.CHANGETURNTRANSITION;
         Debug.Log(state);
         yield return new WaitForSeconds(waitTime);
 
@@ -216,7 +216,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         //CHANGE TO ENEMY TURN
-        state = BattleState.ENEMYTURN;
+        state = GameState.ENEMYTURN;
         Debug.Log(state);
         StartCoroutine(changeTurnTransition());
     }
@@ -224,12 +224,12 @@ public class BattleSystem : MonoBehaviour
     //END BATTLE
     public void endBattle()
     {
-        if (state == BattleState.WON)
+        if (state == GameState.WON)
         {
             battleDialogueText.text = playerUnit.unitName + " Won the battle";
             battleStateText.text = "BATTLE END";
         }
-        else if (state == BattleState.LOST)
+        else if (state == GameState.LOST)
         {
             battleDialogueText.text = playerUnit.unitName + " Lost the battle";
             battleStateText.text = "BATTLE END";
