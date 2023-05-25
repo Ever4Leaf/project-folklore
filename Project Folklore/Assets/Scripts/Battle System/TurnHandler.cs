@@ -10,4 +10,6 @@ public class TurnHandler
     public GameObject attackerGO; //Attacker Game Object
     public GameObject attackTarget; //Attacker Target
 
+    //what attack is performed
+    public BaseAttack usedAttack;
 }

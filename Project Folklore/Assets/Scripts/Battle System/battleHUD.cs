@@ -12,7 +12,7 @@ public class BattleHUD : MonoBehaviour
     public Slider hpSlider;
     public Slider apSlider;
 
-    public void setHUD(UnitModifier unitMod)
+    /*public void setHUD(UnitModifier unitMod)
     {
         nameText.text = unitMod.unitName;
         levelText.text = "Lvl." + unitMod.unitLevel;
@@ -20,7 +20,7 @@ public class BattleHUD : MonoBehaviour
         hpSlider.value = unitMod.currentHP;
         apSlider.maxValue = unitMod.maxAP;
         apSlider.value = unitMod.currentAP;
-    }
+    }*/
 
     public void setHP (int HP)
     {

@@ -601,7 +601,6 @@ GameObject:
   - component: {fileID: 1967880184655886531}
   - component: {fileID: 1967880184655886530}
   - component: {fileID: 1967880184655886529}
-  - component: {fileID: 1967880184655886559}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player1
@@ -920,29 +919,6 @@ MonoBehaviour:
   leftGrabRay: {fileID: 1967880185089794898}
   rightDirectGrab: {fileID: 1967880185138719860}
   leftDirectGrab: {fileID: 1967880184971119275}
---- !u!114 &1967880184655886559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967880184655886541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23408ec670c7f8a43be640624d9166d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitName: Ken Arok
-  unitLevel: 10
-  maxHP: 100
-  currentHP: 100
-  maxAP: 10
-  currentAP: 10
-  attackStat: 15
-  defendStat: 20
-  speedStat: 5
-  recoveryStat: 20
-  costAP: 5
 --- !u!1 &1967880184971119279
 GameObject:
   m_ObjectHideFlags: 0
