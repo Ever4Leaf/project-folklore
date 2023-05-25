@@ -8,6 +8,8 @@ public class PlayerStateMachine : MonoBehaviour
 {
     private BattleStateMachine battleStateMachine;
     public PlayerBase player;
+    public Animator playerAnimate;
+    public bool walking;
 
     public enum TurnState
     {
@@ -51,6 +53,10 @@ public class PlayerStateMachine : MonoBehaviour
         //create panel, fill in info
         CreatePlayerStatusPanel();
 
+        //set animation to idle
+        playerAnimate.SetTrigger("Idle");
+        walking = false;
+
         cur_cooldown = 0f;
         max_cooldown = 10f / player.speedStat;
 
@@ -66,6 +72,9 @@ public class PlayerStateMachine : MonoBehaviour
         switch (currentState)
         {
             case (TurnState.PROCESSING):
+                    //set animation to idle
+                    playerAnimate.SetTrigger("Idle");
+                    walking = false;
                     ProgressBar();
                 break;
 
@@ -76,7 +85,10 @@ public class PlayerStateMachine : MonoBehaviour
                 break;
 
             case (TurnState.WAITING):
-                //idle state
+                    //idle state
+                    //set animation to idle
+                    playerAnimate.SetTrigger("Idle");
+                    walking = false;
                 break;
 
             case (TurnState.SELECTING):
@@ -114,7 +126,9 @@ public class PlayerStateMachine : MonoBehaviour
                             battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
                         }
                     }
-                    //change color/play animation
+                    //change color or play animation death
+                    playerAnimate.SetTrigger("Dead");
+                    playerAnimate.ResetTrigger("Idle");
                     this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
                     //reset playerinput
                     battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.CHECKALIVE;
@@ -145,13 +159,15 @@ public class PlayerStateMachine : MonoBehaviour
         actionStarted = true;
 
         //animate enemy to near the player
-        Vector3 enemyTargetPosition = enemyTarget.transform.position + new Vector3(-0.2f, 0f, -1.25f);
+        Vector3 enemyTargetPosition = enemyTarget.transform.position + new Vector3(-1.25f, 0f, 0f);
         while (MoveTowardTarget(enemyTargetPosition)) { yield return null; }
 
-        //wait
-        yield return new WaitForSeconds(0.5f);
         //do damage
         DoDamage();
+
+        //wait
+        yield return new WaitForSeconds(1.5f);
+        
         //animate back to starting position
         Vector3 startPos = startingPosition;
         while (MoveTowardStart(startPos)) { yield return null; }
@@ -170,17 +186,29 @@ public class PlayerStateMachine : MonoBehaviour
 
     bool MoveTowardTarget(Vector3 target)
     {
+        //set animation to walking
+        //playerAnimate.SetTrigger("Walking");
+        playerAnimate.ResetTrigger("Idle");
+        walking = true;
+
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
 
     bool MoveTowardStart(Vector3 target)
     {
+        //set animation to walking
+        //playerAnimate.SetTrigger("Walking");
+        playerAnimate.ResetTrigger("Idle");
+        walking = true;
+
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
 
     //take damage
     public void TakeDamage(float getDamageAmount)
     {
+        //set animation to take damage
+
         float calc_dmgTaken = (getDamageAmount - player.defendStat);
         player.currentHP -= calc_dmgTaken;
         if (player.currentHP <= 0f)
@@ -194,6 +222,11 @@ public class PlayerStateMachine : MonoBehaviour
     //do damage
     public void DoDamage()
     {
+        //set animation to attack
+        playerAnimate.SetTrigger("Attack");
+        playerAnimate.ResetTrigger("Idle");
+        walking = false;
+
         float calc_playerDmg = player.attackStat + battleStateMachine.performList[0].usedAttack.attackDamage;
         enemyTarget.GetComponent<EnemyStateMachine>().TakeDamage(calc_playerDmg);
     }

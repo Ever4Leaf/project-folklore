@@ -108,7 +108,7 @@ public class EnemyStateMachine : MonoBehaviour
         actionStarted = true;
 
         //animate enemy to near the player
-        Vector3 playerTargetPosition = playerTarget.transform.position + new Vector3(0.2f, 0f, 1.25f);
+        Vector3 playerTargetPosition = playerTarget.transform.position + new Vector3(1.25f, 0f, 0f);
         while (MoveTowardTarget(playerTargetPosition)) { yield return null; }
 
         //wait
