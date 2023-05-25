@@ -6365,11 +6365,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1074124301630683751, guid: e23e65b809aae3e42b4ec2991f2aff8c, type: 3}
       propertyPath: player.maxHP
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1074124301630683751, guid: e23e65b809aae3e42b4ec2991f2aff8c, type: 3}
       propertyPath: player.currentHP
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1074124301630683751, guid: e23e65b809aae3e42b4ec2991f2aff8c, type: 3}
       propertyPath: player.skillList.Array.size
