@@ -20,30 +20,31 @@ public class PlayerStateMachine : MonoBehaviour
         ACTION,
         DEAD
     }
-
+    [Header("Player Status")]
     public TurnState currentState;
 
     //for progress bar
     public float cur_cooldown;
     public float max_cooldown;
-    public Image hpProgressBar;
-    public Image apProgressBar;
+    private Image hpProgressBar;
+    private Image apProgressBar;
     public GameObject selector;
 
+    //Player Dead
+    public bool alive = true;
+
+    [Header("For IEnumerator Purpose")]
     //IEnumerator
     public GameObject enemyTarget;
     public bool actionStarted = false;
     public Vector3 startingPosition;
     public float animSpeed = 5.0f;
 
-    //Player Dead
-    public bool alive = true;
-
+    [Header("Player Panel")]
     //Player Panel
     public PlayerPanelStatus playerStatus;
     public GameObject playerPanel;
     public Transform playerPanelSpacer;
-
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +76,7 @@ public class PlayerStateMachine : MonoBehaviour
                     //set animation to idle
                     playerAnimate.SetTrigger("Idle");
                     walking = false;
+
                     ProgressBar();
                 break;
 
@@ -115,24 +117,37 @@ public class PlayerStateMachine : MonoBehaviour
                     battleStateMachine.playerManageable.Remove(this.gameObject);
                     //deactivte selector
                     selector.SetActive(false);
+                    
                     //reset GUI
                     battleStateMachine.actionPanel.SetActive(false);
                     battleStateMachine.enemySelectPanel.SetActive(false);
+
                     //remove from performlist
-                    for(int i = 0; i < battleStateMachine.performList.Count; i++)
+                    if (battleStateMachine.playerInBattle.Count > 0)
                     {
-                        if(battleStateMachine.performList[i].attackerGO == this.gameObject)
+                        for (int i = 0; i < battleStateMachine.performList.Count; i++)
                         {
-                            battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
+                            if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                            {
+                                battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
+                            }
+
+                            if (battleStateMachine.performList[i].attackTarget == this.gameObject)
+                            {
+                                battleStateMachine.performList[i].attackTarget = battleStateMachine.playerInBattle[Random.Range(0, battleStateMachine.playerInBattle.Count)];
+                            }
                         }
                     }
+                    
                     //change color or play animation death
                     playerAnimate.SetTrigger("Dead");
                     playerAnimate.ResetTrigger("Idle");
                     this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
-                    //reset playerinput
+
+                    //call checkalive state
                     battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.CHECKALIVE;
 
+                    //set alive=false
                     alive = false;
                 }
                 break;
@@ -143,6 +158,9 @@ public class PlayerStateMachine : MonoBehaviour
     {
         cur_cooldown = cur_cooldown + Time.deltaTime;
         float calc_cooldown = cur_cooldown / max_cooldown;
+
+        apProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_cooldown, 0, 1), apProgressBar.transform.localScale.y, apProgressBar.transform.localScale.z);
+        
         if (cur_cooldown >= max_cooldown)
         {
             currentState = TurnState.ADDTOLIST;
@@ -172,16 +190,25 @@ public class PlayerStateMachine : MonoBehaviour
         Vector3 startPos = startingPosition;
         while (MoveTowardStart(startPos)) { yield return null; }
 
-        //remove this(enemy action) from performList in BSM(battleStateMachine)
+        //remove this(player) from performList in BSM(battleStateMachine)
         battleStateMachine.performList.RemoveAt(0);
+
         //reset BSM then wait
-        battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.WAIT;
+        if(battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.WIN && battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.LOSE)
+        {
+            battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.WAIT;
+
+            //reset player state
+            cur_cooldown = 0f;
+            currentState = TurnState.PROCESSING;
+        }
+        else
+        {
+            currentState = TurnState.WAITING;
+        }
 
         //end coroutine
         actionStarted = false;
-        //reset enemy state
-        cur_cooldown = 0f;
-        currentState = TurnState.PROCESSING;
     }
 
     bool MoveTowardTarget(Vector3 target)
@@ -211,11 +238,13 @@ public class PlayerStateMachine : MonoBehaviour
 
         float calc_dmgTaken = (getDamageAmount - player.defendStat);
         player.currentHP -= calc_dmgTaken;
+
         if (player.currentHP <= 0f)
         {
             player.currentHP = 0f;
             currentState = TurnState.DEAD;
         }
+
         UpdatePlayerPanel();
     }
 
@@ -231,6 +260,15 @@ public class PlayerStateMachine : MonoBehaviour
         enemyTarget.GetComponent<EnemyStateMachine>().TakeDamage(calc_playerDmg);
     }
 
+    public void PlayerStatusBar()
+    {
+        float calc_hp = player.currentHP / player.maxHP; //clamp value to 1
+        float calc_ap = player.currentAP / player.maxAP; 
+
+        hpProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_hp, 0, 1), hpProgressBar.transform.localScale.y, hpProgressBar.transform.localScale.z);
+        apProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_ap, 0, 1), apProgressBar.transform.localScale.y, apProgressBar.transform.localScale.z);
+    }
+
     void CreatePlayerStatusPanel()
     {
         playerPanel = Instantiate(playerPanel) as GameObject;
@@ -238,14 +276,17 @@ public class PlayerStateMachine : MonoBehaviour
 
         playerStatus.playerName.text = player.unitName;
         playerStatus.playerHP.text = player.currentHP + "/" + player.maxHP; // Ex. 40/100
-        
-        //add progress bar
 
+        hpProgressBar = playerStatus.hpBar;
+        apProgressBar = playerStatus.apBar;
+
+        PlayerStatusBar();
         playerPanel.transform.SetParent(playerPanelSpacer, false);
     }
 
     void UpdatePlayerPanel()
     {
         playerStatus.playerHP.text = player.currentHP + "/" + player.maxHP; // Ex. 40/100
+        PlayerStatusBar();
     }
 }

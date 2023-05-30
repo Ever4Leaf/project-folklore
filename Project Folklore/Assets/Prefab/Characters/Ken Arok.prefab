@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1074124301630683751}
   m_Layer: 0
   m_Name: Ken Arok
-  m_TagString: Player1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,8 +117,8 @@ MonoBehaviour:
   player:
     unitName: Ken Arok
     unitLevel: 11
-    maxHP: 35
-    currentHP: 35
+    maxHP: 100
+    currentHP: 100
     attackStat: 11
     defendStat: 11
     speedStat: 3
@@ -134,8 +134,8 @@ MonoBehaviour:
   currentState: 0
   cur_cooldown: 0
   max_cooldown: 10
-  hpProgressBar: {fileID: 2175411831282620765}
-  apProgressBar: {fileID: 2175411830447630259}
+  hpProgressBar: {fileID: 0}
+  apProgressBar: {fileID: 0}
   selector: {fileID: 733713886945757910}
   enemyTarget: {fileID: 0}
   actionStarted: 0
@@ -246,28 +246,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5fb680a56ad3c24cb79d4f208a370d5, type: 3}
---- !u!114 &2175411830447630259 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1213882638376351481, guid: c5fb680a56ad3c24cb79d4f208a370d5, type: 3}
-  m_PrefabInstance: {fileID: 1074124302404342090}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2175411831282620765 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1213882639705212951, guid: c5fb680a56ad3c24cb79d4f208a370d5, type: 3}
-  m_PrefabInstance: {fileID: 1074124302404342090}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2175411831742551922 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1213882639633516088, guid: c5fb680a56ad3c24cb79d4f208a370d5, type: 3}

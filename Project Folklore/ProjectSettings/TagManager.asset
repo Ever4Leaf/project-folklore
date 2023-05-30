@@ -8,9 +8,8 @@ TagManager:
   - Right Hand
   - Audio
   - Enemy
-  - Player1
   - DeadPlayer
-  - DeadHero
+  - DeadEnemy
   layers:
   - Default
   - TransparentFX

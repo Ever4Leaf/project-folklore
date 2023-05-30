@@ -770,8 +770,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: {fileID: 1213882639260991107}
   playerHP: {fileID: 1213882639396861223}
-  hpBar: {fileID: 1213882638897091227}
-  apBar: {fileID: 1213882638763756859}
+  hpBar: {fileID: 1213882639705212951}
+  apBar: {fileID: 1213882638376351481}
 --- !u!1 &1213882639705212945
 GameObject:
   m_ObjectHideFlags: 0
