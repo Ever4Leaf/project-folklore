@@ -15,6 +15,7 @@ public class EnemyStateMachine : MonoBehaviour
         ACTION,
         DEAD
     }
+    [Header("Enemy Status")]
     public TurnState currentState;
 
     //for progress bar
@@ -22,8 +23,12 @@ public class EnemyStateMachine : MonoBehaviour
     public float max_cooldown;
     public GameObject selector;
 
+    //Enemy check alive
+    public bool enemyAlive = true;
+
+    [Header("For IEnumerator Purpose")]
     //IEnumerator
-    private bool actionStarted = false;
+    public bool actionStarted = false;
     public GameObject playerTarget;
     public float animSpeed = 5.0f;
     public Vector3 startingPosition;
@@ -65,7 +70,48 @@ public class EnemyStateMachine : MonoBehaviour
                 break;
 
             case (TurnState.DEAD):
+                if (!enemyAlive)
+                {
+                    return;
+                }
+                else
+                {
+                    //change enemy tag
+                    this.gameObject.tag = "DeadEnemy";
+                    //remove enemy game object
+                    battleStateMachine.enemyInBattle.Remove(this.gameObject);
+                    //deactivte selector
+                    selector.SetActive(false);
 
+                    //remove inputs of dead enemy from performlist
+                    if (battleStateMachine.enemyInBattle.Count > 0)
+                    {
+                        for (int i = 0; i < battleStateMachine.performList.Count; i++)
+                        {
+                            if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                            {
+                                battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
+                            }
+
+                            if (battleStateMachine.performList[i].attackTarget = this.gameObject)
+                            {
+                                battleStateMachine.performList[i].attackTarget = battleStateMachine.enemyInBattle[Random.Range(0, battleStateMachine.enemyInBattle.Count)];
+                            }
+                        }
+                    }
+
+                    //change color or play animation
+                    this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
+
+                    //set enemyAlive=false
+                    enemyAlive = false;
+
+                    //reset enemy button
+                    battleStateMachine.EnemyButtons();
+
+                    //call checkalive state
+                    battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.CHECKALIVE;
+                }
                 break;
         }
     }
@@ -93,7 +139,7 @@ public class EnemyStateMachine : MonoBehaviour
 
         int num = Random.Range(0, enemy.attackList.Count);
         enemyAction.usedAttack = enemy.attackList[num];
-        Debug.Log(this.gameObject.name + " use " + enemyAction.usedAttack.attackName + " and do " + enemyAction.usedAttack.attackDamage + " damage");
+        //Debug.Log(this.gameObject.name + " use " + enemyAction.usedAttack.attackName + " and do " + enemyAction.usedAttack.attackDamage + " damage");
 
         battleStateMachine.GetActionInfoFrom(enemyAction);
     } 
@@ -121,16 +167,25 @@ public class EnemyStateMachine : MonoBehaviour
         Vector3 startPos = startingPosition;
         while (MoveTowardStart(startPos)) { yield return null; }
 
-        //remove this(enemy action) from performList in BSM(battleStateMachine)
+        //remove this(enemy) from performList in BSM(battleStateMachine)
         battleStateMachine.performList.RemoveAt(0);
+
         //reset BSM then wait
-        battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.WAIT;
+        if (battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.WIN && battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.LOSE)
+        {
+            battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.WAIT;
+
+            //reset enemy state
+            cur_cooldown = 0f;
+            currentState = TurnState.PROCESSING;
+        }
+        else
+        {
+            currentState = TurnState.WAITING;
+        }
 
         //end coroutine
         actionStarted = false;
-        //reset enemy state
-        cur_cooldown = 0f;
-        currentState = TurnState.PROCESSING;
     }
 
     bool MoveTowardTarget(Vector3 target)

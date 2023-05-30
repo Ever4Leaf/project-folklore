@@ -19,7 +19,7 @@ public class BattleStateMachine : MonoBehaviour
 
     public List<TurnHandler> performList = new List<TurnHandler>();
     public List<GameObject> playerInBattle = new List<GameObject>();
-    public List<GameObject> enemyInbattle = new List<GameObject>();
+    public List<GameObject> enemyInBattle = new List<GameObject>();
 
     public enum PlayerGUI
     {
@@ -34,7 +34,7 @@ public class BattleStateMachine : MonoBehaviour
     public List<GameObject> playerManageable = new List<GameObject>();
     private TurnHandler playerActionSelect;
 
-    //Panel Setup
+    //UGUI Setup
     public GameObject actionPanel;
     public GameObject skillPanel;
     public GameObject enemySelectPanel;
@@ -48,6 +48,8 @@ public class BattleStateMachine : MonoBehaviour
     public Transform targetEnemySpacer;
 
     public List<GameObject> actButtons = new List<GameObject>();
+
+    public List<GameObject> enemyButtons = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -120,13 +122,13 @@ public class BattleStateMachine : MonoBehaviour
             case (BattleStates.CHECKALIVE):
                     if(playerInBattle.Count < 1)
                     {
-                        curr_battleState = BattleStates.LOSE;
                         //battle lose
+                        curr_battleState = BattleStates.LOSE;
                     }
-                    else if(enemyInbattle.Count < 1)
+                    else if(enemyInBattle.Count < 1)
                     {
-                        curr_battleState = BattleStates.WIN;
                         //battle win
+                        curr_battleState = BattleStates.WIN;
                     }
                     else
                     {
@@ -138,11 +140,19 @@ public class BattleStateMachine : MonoBehaviour
                 break;
 
             case (BattleStates.WIN):
-                
+                    Debug.Log("WIN");
+                    for(int i = 0;i < playerInBattle.Count; i++)
+                    {
+                        playerInBattle[i].GetComponent<PlayerStateMachine>().currentState = PlayerStateMachine.TurnState.WAITING;
+                    }
                 break;
 
             case (BattleStates.LOSE):
-                
+                Debug.Log("LOSE");
+                for (int i = 0; i < enemyInBattle.Count; i++)
+                {
+                    enemyInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
+                }
                 break;
         }
 
@@ -180,7 +190,15 @@ public class BattleStateMachine : MonoBehaviour
 
     public void EnemyButtons()
     {
-        foreach (GameObject enemy in enemyInbattle)
+        //clean
+        foreach(GameObject enemyBtn in enemyButtons)
+        {
+            Destroy(enemyBtn);
+        }
+        enemyButtons.Clear();
+
+        //create button
+        foreach (GameObject enemy in enemyInBattle)
         {
             GameObject newButton = Instantiate(enemyButton) as GameObject;
             EnemySelectButton eButton = enemyButton.GetComponent<EnemySelectButton>();
@@ -193,6 +211,7 @@ public class BattleStateMachine : MonoBehaviour
             eButton.enemyPrefab = enemy;
 
             newButton.transform.SetParent(targetEnemySpacer, false);
+            enemyButtons.Add(newButton);
         }
     }
 
@@ -297,7 +316,7 @@ public class BattleStateMachine : MonoBehaviour
 
     public void GetPlayerGO()
     {
-        GameObject[] playerGO = GameObject.FindGameObjectsWithTag("Player1");
+        GameObject[] playerGO = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject pGO in playerGO)
         {
             playerInBattle.Add(pGO);
@@ -309,7 +328,7 @@ public class BattleStateMachine : MonoBehaviour
         GameObject[] enemyGO = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject eGO in enemyGO)
         {
-            enemyInbattle.Add(eGO);
+            enemyInBattle.Add(eGO);
         }
     }
 }
