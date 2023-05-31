@@ -6,6 +6,10 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerBase :BaseEntityClass
 {
+    //player Animator
+    [Header("Player Animator")]
+    public Animator playerAnimator;
+
     //Player Action Point
     [Header("Action Point")]
     public float maxAP;
