@@ -148,8 +148,8 @@ GameObject:
   - component: {fileID: 8949209930813478697}
   - component: {fileID: 8949209930813478698}
   - component: {fileID: 6060879827304020950}
-  - component: {fileID: 4299450677438686887}
   - component: {fileID: 2642817540628968685}
+  - component: {fileID: 2916878450262749353}
   m_Layer: 5
   m_Name: Button Skill
   m_TagString: Untagged
@@ -292,7 +292,20 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &4299450677438686887
+--- !u!114 &2642817540628968685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949209930813478700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0a238cfe44115346ac10d9f837586fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillToPerform: {fileID: 0}
+--- !u!114 &2916878450262749353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,16 +331,3 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!114 &2642817540628968685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8949209930813478700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a238cfe44115346ac10d9f837586fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillToPerform: {fileID: 0}
