@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &98867709 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8083015673790952448, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
-  m_PrefabInstance: {fileID: 8083015673751399933}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1123385791
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +215,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &1385169634
 PrefabInstance:
@@ -231,7 +226,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2152303549306675990, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2152303549306675990, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
       propertyPath: m_LocalPosition.x
@@ -361,7 +356,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 32.04, y: 0, z: 0}
 --- !u!1 &1595453157
 GameObject:
@@ -457,10 +452,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 98867709}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6573567453774255815
 PrefabInstance:
@@ -469,6 +463,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1219108410, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6573567452210150185, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
       propertyPath: m_TagString
       value: LeaveTown
@@ -521,7 +519,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Village1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1219108410, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
 --- !u!1 &6573567453774255816 stripped
 GameObject:
@@ -540,18 +539,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8260446b698a34fb2f2d1e788364ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: OverworldTesting
+  sceneToLoad: WorldMap
   spawnPoint: {fileID: 1423396964174078053, guid: 866f9054ce7927c43817eb226124368e, type: 3}
---- !u!1001 &8083015673751399933
+--- !u!1001 &7559103018656223699
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1595453161}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8083015673790952448, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8083015673790952448, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -559,11 +558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8083015673790952448, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8083015673790952448, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.115
+      value: -6.23
       objectReference: {fileID: 0}
     - target: {fileID: 8083015673790952448, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
       propertyPath: m_LocalRotation.w

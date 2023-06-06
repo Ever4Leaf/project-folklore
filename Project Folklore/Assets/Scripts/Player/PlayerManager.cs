@@ -9,9 +9,13 @@ public class PlayerManager : MonoBehaviour
 	public float w_speed, wb_speed, olw_speed, rn_speed, ro_speed;
 	public bool walking;
 	public Transform playerTrans;
-	
-	
-	void FixedUpdate(){
+
+    private void Start()
+    {
+		transform.position = GameManager.instance.nextPlayerPosition;
+    }
+
+    void FixedUpdate(){
 		if(Input.GetKey(KeyCode.W)){
 			playerRigid.velocity = transform.forward * w_speed * Time.deltaTime;
 		}
@@ -50,5 +54,24 @@ public class PlayerManager : MonoBehaviour
 			playerTrans.Rotate(0, ro_speed * Time.deltaTime, 0);
 		}
 		
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "EnterTown")
+		{
+			CollisionHandler colHandler = other.gameObject.GetComponent<CollisionHandler>();
+			GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
+			GameManager.instance.sceneToLoad = colHandler.sceneToLoad;
+			GameManager.instance.LoadNextScene();
+		}
+
+		if (other.tag == "LeaveTown")
+		{
+			CollisionHandler colHandler = other.gameObject.GetComponent<CollisionHandler>();
+			GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
+			GameManager.instance.sceneToLoad = colHandler.sceneToLoad;
+			GameManager.instance.LoadNextScene();
+		}
 	}
 }

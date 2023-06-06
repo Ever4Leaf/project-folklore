@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
         //set this instance to be not destroyable
         DontDestroyOnLoad(gameObject);
 
-        if (!GameObject.Find("Player"))
+        if (!GameObject.Find("Ken Arok"))
         {
-            GameObject Player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            GameObject Player = Instantiate(playerPrefab, nextPlayerPosition, Quaternion.identity) as GameObject;
             Player.name = "Player";
         }
     }
