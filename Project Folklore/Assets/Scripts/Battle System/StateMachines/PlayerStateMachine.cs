@@ -48,7 +48,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         //find spacer
-        playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        playerPanelSpacer = GameObject.Find("GUIs").transform.Find("Canvas Character").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        //playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
         //create panel, fill in info
         CreatePlayerStatusPanel();
 

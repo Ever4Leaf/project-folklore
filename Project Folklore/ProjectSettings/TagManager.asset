@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - DeadPlayer
   - DeadEnemy
+  - VRCamera
+  - EnterTown
+  - LeaveTown
   layers:
   - Default
   - TransparentFX
