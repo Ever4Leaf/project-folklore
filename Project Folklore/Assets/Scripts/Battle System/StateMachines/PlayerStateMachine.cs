@@ -123,14 +123,17 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         for (int i = 0; i < battleStateMachine.performList.Count; i++)
                         {
-                            if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                            if (i != 0)
                             {
-                                battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
-                            }
+                                if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                                {
+                                    battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
+                                }
 
-                            if (battleStateMachine.performList[i].attackTarget == this.gameObject)
-                            {
-                                battleStateMachine.performList[i].attackTarget = battleStateMachine.playerInBattle[Random.Range(0, battleStateMachine.playerInBattle.Count)];
+                                if (battleStateMachine.performList[i].attackTarget == this.gameObject)
+                                {
+                                    battleStateMachine.performList[i].attackTarget = battleStateMachine.playerInBattle[Random.Range(0, battleStateMachine.playerInBattle.Count)];
+                                }
                             }
                         }
                     }

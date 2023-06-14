@@ -469,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6573567452210150185, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
       propertyPath: m_TagString
-      value: LeaveTown
+      value: TeleportScene
       objectReference: {fileID: 0}
     - target: {fileID: 6573567452748636710, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
       propertyPath: m_RootOrder
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: WorldMap
-  spawnPoint: {fileID: 1423396964174078053, guid: 866f9054ce7927c43817eb226124368e, type: 3}
+  spawnPointName: SP_LeaveVillage1
 --- !u!1001 &7559103018656223699
 PrefabInstance:
   m_ObjectHideFlags: 0

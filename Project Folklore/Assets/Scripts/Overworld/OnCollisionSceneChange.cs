@@ -9,7 +9,7 @@ public class OnCollisionSceneChange : MonoBehaviour
         if (other.tag == "EnterTown")
         {
             CollisionHandler colHandler = other.gameObject.GetComponent<CollisionHandler>();
-            GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
+            //GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
             GameManager.instance.sceneToLoad = colHandler.sceneToLoad;
             GameManager.instance.LoadNextScene();
         }
@@ -17,7 +17,7 @@ public class OnCollisionSceneChange : MonoBehaviour
         if (other.tag == "LeaveTown")
         {
             CollisionHandler colHandler = other.gameObject.GetComponent<CollisionHandler>();
-            GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
+            //GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
             GameManager.instance.sceneToLoad = colHandler.sceneToLoad;
             GameManager.instance.LoadNextScene();
         }

@@ -37,7 +37,7 @@ public class EnemyStateMachine : MonoBehaviour
     void Start()
     {
         cur_cooldown = 0f;
-        max_cooldown = 20f / enemy.speedStat;
+        max_cooldown = max_cooldown / enemy.speedStat;
 
         currentState = TurnState.PROCESSING;
         selector.SetActive(false);
@@ -88,14 +88,17 @@ public class EnemyStateMachine : MonoBehaviour
                     {
                         for (int i = 0; i < battleStateMachine.performList.Count; i++)
                         {
-                            if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                            if(i != 0)
                             {
-                                battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
-                            }
+                                if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                                {
+                                    battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
+                                }
 
-                            if (battleStateMachine.performList[i].attackTarget = this.gameObject)
-                            {
-                                battleStateMachine.performList[i].attackTarget = battleStateMachine.enemyInBattle[Random.Range(0, battleStateMachine.enemyInBattle.Count)];
+                                if (battleStateMachine.performList[i].attackTarget = this.gameObject)
+                                {
+                                    battleStateMachine.performList[i].attackTarget = battleStateMachine.enemyInBattle[Random.Range(0, battleStateMachine.enemyInBattle.Count)];
+                                }
                             }
                         }
                     }

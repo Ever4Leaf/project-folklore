@@ -304,9 +304,10 @@ GameObject:
   - component: {fileID: 587659165}
   - component: {fileID: 587659164}
   - component: {fileID: 587659163}
+  - component: {fileID: 587659167}
   m_Layer: 0
-  m_Name: Region 2
-  m_TagString: Untagged
+  m_Name: Encounter Region 2
+  m_TagString: EncounterZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -359,7 +360,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e0f01c550f1f71347913e314e28c590c, type: 2}
+  - {fileID: 2100000, guid: 161f87f6708b4e9439e26db878b48f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,6 +390,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587659161}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &587659167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587659161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b651166114ea612418001c5834bcbdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmountEnemy: 1
+  battleScene: BattleScene
+  possibleEnemy:
+  - {fileID: 8154311171108047590, guid: 2c5e1cefaefaffc498ae3ed85549c539, type: 3}
 --- !u!1001 &628668407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -398,7 +415,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1423396964174078053, guid: 866f9054ce7927c43817eb226124368e, type: 3}
       propertyPath: m_Name
-      value: 'SP_LeaveVillage1 '
+      value: SP_LeaveVillage1
       objectReference: {fileID: 0}
     - target: {fileID: 1423396964174078054, guid: 866f9054ce7927c43817eb226124368e, type: 3}
       propertyPath: m_RootOrder
@@ -458,9 +475,10 @@ GameObject:
   - component: {fileID: 695108814}
   - component: {fileID: 695108813}
   - component: {fileID: 695108812}
+  - component: {fileID: 695108816}
   m_Layer: 0
-  m_Name: Region 3
-  m_TagString: Untagged
+  m_Name: Encounter Region 3
+  m_TagString: EncounterZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -513,7 +531,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e0f01c550f1f71347913e314e28c590c, type: 2}
+  - {fileID: 2100000, guid: 161f87f6708b4e9439e26db878b48f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -543,6 +561,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 695108810}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &695108816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695108810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b651166114ea612418001c5834bcbdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmountEnemy: 3
+  battleScene: BattleScene
+  possibleEnemy:
+  - {fileID: 3580172047850081356, guid: 2cf3bea873230f14594d3fbc4aa5b7f6, type: 3}
+  - {fileID: 8154311171108047590, guid: 2c5e1cefaefaffc498ae3ed85549c539, type: 3}
 --- !u!1 &933357436
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6573567452748636711, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
       propertyPath: m_TagString
-      value: EnterTown
+      value: TeleportScene
       objectReference: {fileID: 0}
     - target: {fileID: 6573567453049910021, guid: c1fc97a7abdb09b4b9e2e575bace8bbb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -849,7 +884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Village1
-  spawnPoint: {fileID: 8083015673790952449, guid: 0432e0fc3f099b243bd2cfda10a489b3, type: 3}
+  spawnPointName: SP_EnterVillage1
 --- !u!1 &1364956178
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,9 +897,10 @@ GameObject:
   - component: {fileID: 1364956182}
   - component: {fileID: 1364956181}
   - component: {fileID: 1364956180}
+  - component: {fileID: 1364956184}
   m_Layer: 0
-  m_Name: Region 1
-  m_TagString: Untagged
+  m_Name: Encounter Region 1
+  m_TagString: EncounterZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -917,7 +953,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e0f01c550f1f71347913e314e28c590c, type: 2}
+  - {fileID: 2100000, guid: 161f87f6708b4e9439e26db878b48f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -947,6 +983,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364956178}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1364956184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364956178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b651166114ea612418001c5834bcbdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmountEnemy: 2
+  battleScene: BattleScene
+  possibleEnemy:
+  - {fileID: 3580172047850081356, guid: 2cf3bea873230f14594d3fbc4aa5b7f6, type: 3}
 --- !u!1 &1934685078
 GameObject:
   m_ObjectHideFlags: 0

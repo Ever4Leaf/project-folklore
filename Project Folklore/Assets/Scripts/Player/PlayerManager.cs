@@ -10,10 +10,23 @@ public class PlayerManager : MonoBehaviour
 	public bool walking;
 	public Transform playerTrans;
 
+	Vector3 currentPosition, lastPosition;
+
     private void Start()
     {
-		transform.position = GameManager.instance.nextPlayerPosition;
-    }
+		if (GameManager.instance.nextSpawnPoint != "")
+        {
+			GameObject spawnPoint = GameObject.Find(GameManager.instance.nextSpawnPoint);
+			transform.position = spawnPoint.transform.position;
+
+			GameManager.instance.nextSpawnPoint = "";
+		}
+		else if (GameManager.instance.lastPlayerPosition != Vector3.zero)
+        {
+			transform.position = GameManager.instance.lastPlayerPosition;
+			GameManager.instance.lastPlayerPosition = Vector3.zero;
+        }
+	}
 
     void FixedUpdate(){
 		if(Input.GetKey(KeyCode.W)){
@@ -22,7 +35,19 @@ public class PlayerManager : MonoBehaviour
 		if(Input.GetKey(KeyCode.S)){
 			playerRigid.velocity = -transform.forward * wb_speed * Time.deltaTime;
 		}
+
+		currentPosition = transform.position;
+		if (currentPosition == lastPosition)
+        {
+			GameManager.instance.isWalking = false;
+        }
+        else
+        {
+			GameManager.instance.isWalking = true;
+        }
+		lastPosition = currentPosition;
 	}
+
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.W)){
 			playerAnim.SetTrigger("Walking");
@@ -58,20 +83,34 @@ public class PlayerManager : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "EnterTown")
-		{
+		if (other.tag == "TeleportScene")
+        {
 			CollisionHandler colHandler = other.gameObject.GetComponent<CollisionHandler>();
-			GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
+			GameManager.instance.nextSpawnPoint = colHandler.spawnPointName;
 			GameManager.instance.sceneToLoad = colHandler.sceneToLoad;
 			GameManager.instance.LoadNextScene();
 		}
 
-		if (other.tag == "LeaveTown")
+		if (other.tag == "EncounterZone")
+        {
+			RegionData region = other.gameObject.GetComponent<RegionData>();
+			GameManager.instance.curr_region = region;
+        }
+	}
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "EncounterZone")
+        {
+			GameManager.instance.canGetEncounter = true;
+        }
+	}
+
+    private void OnTriggerExit(Collider other)
+    {
+		if (other.tag == "EncounterZone")
 		{
-			CollisionHandler colHandler = other.gameObject.GetComponent<CollisionHandler>();
-			GameManager.instance.nextPlayerPosition = colHandler.spawnPoint.transform.position;
-			GameManager.instance.sceneToLoad = colHandler.sceneToLoad;
-			GameManager.instance.LoadNextScene();
+			GameManager.instance.canGetEncounter = false;
 		}
 	}
 }

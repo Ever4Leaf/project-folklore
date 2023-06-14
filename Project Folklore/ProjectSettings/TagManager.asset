@@ -11,8 +11,8 @@ TagManager:
   - DeadPlayer
   - DeadEnemy
   - VRCamera
-  - EnterTown
-  - LeaveTown
+  - TeleportScene
+  - EncounterZone
   layers:
   - Default
   - TransparentFX
