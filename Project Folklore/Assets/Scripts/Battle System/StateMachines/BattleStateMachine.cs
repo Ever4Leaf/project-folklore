@@ -17,6 +17,7 @@ public class BattleStateMachine : MonoBehaviour
     }
     public BattleStates curr_battleState;
 
+    [Header("Manageable Game Objects")]
     public List<TurnHandler> performList = new List<TurnHandler>();
     public List<GameObject> playerInBattle = new List<GameObject>();
     public List<GameObject> enemyInBattle = new List<GameObject>();
@@ -30,34 +31,49 @@ public class BattleStateMachine : MonoBehaviour
         DONE
     }
     public PlayerGUI playerInput;
-
     public List<GameObject> playerManageable = new List<GameObject>();
     private TurnHandler playerActionSelect;
 
-    //UGUI Setup
+    [Header("Player UI: Panel")]
     public GameObject actionPanel;
     public GameObject skillPanel;
     public GameObject enemySelectPanel;
 
+    [Header("Player UI: Button")]
     public GameObject actionButton;
     public GameObject enemyButton;
     public GameObject skillButton;
-
+    
+    [Header("Player UI: Spacer")]
     public Transform actionSpacer;
     public Transform skillSpacer;
     public Transform targetEnemySpacer;
 
-    public List<GameObject> actButtons = new List<GameObject>();
+    //List of buttons
+    private List<GameObject> actButtons = new List<GameObject>();
+    private List<GameObject> enemyButtons = new List<GameObject>();
 
-    public List<GameObject> enemyButtons = new List<GameObject>();
+    [Header("Spawn Points")]
+    public List<Transform> spawnPoints = new List<Transform>();
+
+    private void Awake()
+    {
+        for(int i = 0; i < GameManager.instance.enemyAmount; i++)
+        {
+            GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.identity) as GameObject;
+            newEnemy.name = newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName + "_" + (i+1);
+            newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName = newEnemy.name;
+            enemyInBattle.Add(newEnemy);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         curr_battleState = BattleStates.WAIT;
         //find go then populate to respective list
-        GetPlayerGO();
-        GetEnemyGO();
+        //enemyInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        playerInBattle.AddRange(GameObject.FindGameObjectsWithTag("Player"));
 
         playerInput = PlayerGUI.ACTIVATE;
 
@@ -148,11 +164,15 @@ public class BattleStateMachine : MonoBehaviour
                 break;
 
             case (BattleStates.LOSE):
-                Debug.Log("LOSE");
-                for (int i = 0; i < enemyInBattle.Count; i++)
-                {
-                    enemyInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
-                }
+                    Debug.Log("LOSE");
+                    for (int i = 0; i < enemyInBattle.Count; i++)
+                    {
+                        enemyInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
+                    }
+
+                    GameManager.instance.LoadSceneAfterBattle();
+                    GameManager.instance.curr_GameState = GameManager.GammeStates.WORLD_STATE;
+                    GameManager.instance.enemyToBattle.Clear();
                 break;
         }
 
@@ -311,24 +331,6 @@ public class BattleStateMachine : MonoBehaviour
         else
         {
             SkillButton.GetComponent<Button>().interactable = false;
-        }
-    }
-
-    public void GetPlayerGO()
-    {
-        GameObject[] playerGO = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject pGO in playerGO)
-        {
-            playerInBattle.Add(pGO);
-        }
-    }
-
-    public void GetEnemyGO()
-    {
-        GameObject[] enemyGO = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject eGO in enemyGO)
-        {
-            enemyInBattle.Add(eGO);
         }
     }
 }
