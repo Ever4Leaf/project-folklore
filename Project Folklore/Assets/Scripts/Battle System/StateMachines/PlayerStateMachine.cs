@@ -48,7 +48,8 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         //find spacer
-        playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        playerPanelSpacer = GameObject.Find("GUIs").transform.Find("Canvas Character").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        //playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
         //create panel, fill in info
         CreatePlayerStatusPanel();
 
@@ -122,14 +123,17 @@ public class PlayerStateMachine : MonoBehaviour
                     {
                         for (int i = 0; i < battleStateMachine.performList.Count; i++)
                         {
-                            if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                            if (i != 0)
                             {
-                                battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
-                            }
+                                if (battleStateMachine.performList[i].attackerGO == this.gameObject)
+                                {
+                                    battleStateMachine.performList.Remove(battleStateMachine.performList[i]);
+                                }
 
-                            if (battleStateMachine.performList[i].attackTarget == this.gameObject)
-                            {
-                                battleStateMachine.performList[i].attackTarget = battleStateMachine.playerInBattle[Random.Range(0, battleStateMachine.playerInBattle.Count)];
+                                if (battleStateMachine.performList[i].attackTarget == this.gameObject)
+                                {
+                                    battleStateMachine.performList[i].attackTarget = battleStateMachine.playerInBattle[Random.Range(0, battleStateMachine.playerInBattle.Count)];
+                                }
                             }
                         }
                     }

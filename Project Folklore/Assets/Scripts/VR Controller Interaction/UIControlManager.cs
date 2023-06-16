@@ -7,96 +7,89 @@ public class UIControlManager : MonoBehaviour
 {
     [Header("VR Headset")]
     public GameObject headSetPrefab;
-    public float spawnDistance = 1f;
+    public float spawnDistance;
 
-    [Header("UIs")]
+    [Header("Canvas UI")]
     public GameObject playerStatus;
-    public GameObject leftHand;
-    public GameObject rightHand;
-    public GameObject gameSetting;
-    public GameObject playerInventory;
-    public GameObject enemiesStatus;
-    public GameObject announcerCorner;
+    public GameObject actionList;
+    public GameObject skillList;
+    public GameObject targetList;
+    //public GameObject playerInventory;
+    //public GameObject enemiesStatus;
+    //public GameObject announcerCorner;
 
     [Header("VR Control Input")]
     public InputActionProperty showButton;
 
-    // Update is called once per frame
     void Update()
     {
-        headSetPrefab = GameObject.FindGameObjectWithTag("Player1");
-
-        if (showButton.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Q))
-        {
-            leftHandUpdate();
-        }
+        headSetPrefab = GameObject.FindGameObjectWithTag("VRCamera");
+        playerStatusVRUI();
+        actionListVRUI();
 
         if (showButton.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.E))
         {
-            rightHandUpdate();
+            skillListVRUI();
         }
 
         if (showButton.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Escape))
         {
-            gameSettingUpdate();
+            targetListVRUI();
         }
 
-        if (showButton.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.I))
-        {
-            playerInventoryUpdate();
-        }
+        //if (showButton.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.I))
+        //{
+        //    playerInventoryUpdate();
+        //}
 
-        headSetPrefab.transform.position = headSetPrefab.transform.position;
-        Debug.Log(headSetPrefab.transform.position);
-
-        playerStatusUpdate();
-        enemiesStatusStaticUpdate();
-        announcerCornerUpdate();
+        //enemiesStatusStaticUpdate();
+        //announcerCornerUpdate();
     }
 
-    void leftHandUpdate()
+    void playerStatusVRUI()
     {
-        leftHand.SetActive(!leftHand.activeSelf);
-
-        leftHand.transform.position = headSetPrefab.transform.position + new Vector3(-0.77f, 0.415f, 1.98f) * spawnDistance;
+        playerStatus.transform.position = headSetPrefab.transform.position + new Vector3(1.39f, -0.35f, 0.7f) * spawnDistance;
     }
 
-    void rightHandUpdate()
+    
+    void actionListVRUI()
     {
-        rightHand.SetActive(!rightHand.activeSelf);
+        //actionList.SetActive(!actionList.activeSelf);
 
-        rightHand.transform.position = headSetPrefab.transform.position + new Vector3(0.77f, 0.415f, 1.98f) * spawnDistance;
+        actionList.transform.position = headSetPrefab.transform.position + new Vector3(2.2f, -0.4f, -1.1f) * spawnDistance;
     }
 
-    void gameSettingUpdate()
+    void skillListVRUI()
     {
-        gameSetting.SetActive(!gameSetting.activeSelf);
+        skillList.SetActive(!skillList.activeSelf);
 
-        gameSetting.transform.position = headSetPrefab.transform.position + new Vector3(headSetPrefab.transform.forward.x, 0.5f, headSetPrefab.transform.forward.z).normalized * spawnDistance;
-
-        gameSetting.transform.LookAt(new Vector3(headSetPrefab.transform.position.x, gameSetting.transform.position.y, headSetPrefab.transform.position.z));
-        gameSetting.transform.forward *= -1;
+        skillList.transform.position = headSetPrefab.transform.position + new Vector3(2.2f, -0.4f, -1.1f) * spawnDistance;
     }
 
-    void playerInventoryUpdate()
+    void targetListVRUI()
     {
-        playerInventory.SetActive(!playerInventory.activeSelf);
+        targetList.SetActive(!targetList.activeSelf);
 
-        playerInventory.transform.position = headSetPrefab.transform.position + new Vector3(headSetPrefab.transform.forward.x, 0.4f, 0.2f) * spawnDistance;
+        targetList.transform.position = headSetPrefab.transform.position + new Vector3(2.2f, -0.4f, -1.1f) * spawnDistance;
+
+        targetList.transform.LookAt(new Vector3(headSetPrefab.transform.position.x, targetList.transform.position.y, headSetPrefab.transform.position.z));
+        targetList.transform.forward *= -1;
     }
 
-    void playerStatusUpdate()
-    {
-        playerStatus.transform.position = headSetPrefab.transform.position + new Vector3(-2.63f, 1.95f, 3.31f);
-    }
+    //void playerInventoryUpdate()
+    //{
+    //    playerInventory.SetActive(!playerInventory.activeSelf);
 
-    void enemiesStatusStaticUpdate()
-    {
-        enemiesStatus.transform.position = headSetPrefab.transform.position + new Vector3(2.115f, 1.223f, 2.529f);
-    }
+    //    playerInventory.transform.position = headSetPrefab.transform.position + new Vector3(headSetPrefab.transform.forward.x, 0.4f, 0.2f) * spawnDistance;
+    //}
 
-    void announcerCornerUpdate()
-    {
-        announcerCorner.transform.position = headSetPrefab.transform.position + new Vector3(2.377f, 1.758f, 2.989f);
-    }
+    //void enemiesStatusStaticUpdate()
+    //{
+    //    enemiesStatus.transform.position = headSetPrefab.transform.position + new Vector3(2.115f, 1.223f, 2.529f);
+    //}
+
+    //void announcerCornerUpdate()
+    //{
+    //    announcerCorner.transform.position = headSetPrefab.transform.position + new Vector3(2.377f, 1.758f, 2.989f);
+    //}
 }

@@ -10,6 +10,9 @@ TagManager:
   - Enemy
   - DeadPlayer
   - DeadEnemy
+  - VRCamera
+  - TeleportScene
+  - EncounterZone
   layers:
   - Default
   - TransparentFX
