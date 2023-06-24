@@ -21,7 +21,7 @@ public class EnemyStateMachine : MonoBehaviour
     //for progress bar
     public float cur_cooldown;
     public float max_cooldown;
-    public GameObject selector;
+    public GameObject Selector;
 
     //Enemy check alive
     public bool enemyAlive = true;
@@ -40,7 +40,7 @@ public class EnemyStateMachine : MonoBehaviour
         max_cooldown = max_cooldown / enemy.speedStat;
 
         currentState = TurnState.PROCESSING;
-        selector.SetActive(false);
+        Selector.SetActive(false);
         battleStateMachine = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         startingPosition = transform.position;
     }
@@ -81,7 +81,7 @@ public class EnemyStateMachine : MonoBehaviour
                     //remove enemy game object
                     battleStateMachine.enemyInBattle.Remove(this.gameObject);
                     //deactivte selector
-                    selector.SetActive(false);
+                    Selector.SetActive(false);
 
                     //remove inputs of dead enemy from performlist
                     if (battleStateMachine.enemyInBattle.Count > 0)
@@ -142,7 +142,6 @@ public class EnemyStateMachine : MonoBehaviour
 
         int num = Random.Range(0, enemy.attackList.Count);
         enemyAction.usedAttack = enemy.attackList[num];
-        //Debug.Log(this.gameObject.name + " use " + enemyAction.usedAttack.attackName + " and do " + enemyAction.usedAttack.attackDamage + " damage");
 
         battleStateMachine.GetActionInfoFrom(enemyAction);
     } 

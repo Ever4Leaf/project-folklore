@@ -124,15 +124,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3580172047850081356}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.8, y: 0.2, z: 1.44}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4899011711507449428}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3547971356772748418
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -220,15 +220,14 @@ MonoBehaviour:
     speedStat: 3
     attackList:
     - {fileID: 1966685605878889380, guid: f0d93ad2f73510944893aa9865e0de1a, type: 3}
-    enemyAnimator: {fileID: 0}
     enemyType: 1
     enemyRarity: 0
   currentState: 0
   cur_cooldown: 0
   max_cooldown: 20
-  selector: {fileID: 2628675297874121534}
+  Selector: {fileID: 2628675297874121534}
   enemyAlive: 1
   actionStarted: 0
   playerTarget: {fileID: 0}
-  animSpeed: 5
+  animSpeed: 15
   startingPosition: {x: 0, y: 0, z: 0}

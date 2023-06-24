@@ -50,29 +50,33 @@ public class BattleStateMachine : MonoBehaviour
     public Transform targetEnemySpacer;
 
     //List of buttons
-    private List<GameObject> actButtons = new List<GameObject>();
-    private List<GameObject> enemyButtons = new List<GameObject>();
+    [Header("Button List")]
+    public List<GameObject> actButtons = new List<GameObject>();
+    public List<GameObject> enemyButtons = new List<GameObject>();
 
     [Header("Spawn Points")]
     public List<Transform> spawnPoints = new List<Transform>();
 
-    private void Awake()
-    {
-        for(int i = 0; i < GameManager.instance.enemyAmount; i++)
-        {
-            GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.identity) as GameObject;
-            newEnemy.name = newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName + "_" + (i+1);
-            newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName = newEnemy.name;
-            enemyInBattle.Add(newEnemy);
-        }
-    }
+    //private void Awake()
+    //{
+    //    for (int i = 0; i < GameManager.instance.enemyAmount; i++)
+    //    {
+    //        GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.identity) as GameObject;
+    //        newEnemy.name = newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName + "_" + (i + 1);
+    //        newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName = newEnemy.name;
+    //        enemyInBattle.Add(newEnemy);
+    //    }
+
+    //    Cursor.lockState = CursorLockMode.None;
+    //    Cursor.visible = true;
+    //}
 
     // Start is called before the first frame update
     void Start()
     {
         curr_battleState = BattleStates.WAIT;
         //find go then populate to respective list
-        //enemyInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        enemyInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         playerInBattle.AddRange(GameObject.FindGameObjectsWithTag("Player"));
 
         playerInput = PlayerGUI.ACTIVATE;
@@ -104,8 +108,21 @@ public class BattleStateMachine : MonoBehaviour
                     if(performList[0].attackerType == "Player")
                     {
                         PlayerStateMachine playerStateMachine = actionPerformer.GetComponent<PlayerStateMachine>();
-                        playerStateMachine.enemyTarget = performList[0].attackTarget;
-                        playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
+                        for (int i = 0; i < enemyInBattle.Count; i++)
+                        {
+                            if (performList[0].attackTarget == enemyInBattle[i])
+                            {
+                                playerStateMachine.enemyTarget = performList[0].attackTarget;
+                                playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
+                                break;
+                            }
+                            //else
+                            //{
+                            //    performList[0].attackTarget = enemyInBattle[Random.Range(0, enemyInBattle.Count)];
+                            //    playerStateMachine.enemyTarget = performList[0].attackTarget;
+                            //    playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
+                            //}
+                        }
                     }
 
                     if (performList[0].attackerType == "Enemy")
@@ -157,10 +174,14 @@ public class BattleStateMachine : MonoBehaviour
 
             case (BattleStates.WIN):
                     Debug.Log("WIN");
-                    for(int i = 0;i < playerInBattle.Count; i++)
+                    for(int i = 0; i < playerInBattle.Count; i++)
                     {
                         playerInBattle[i].GetComponent<PlayerStateMachine>().currentState = PlayerStateMachine.TurnState.WAITING;
                     }
+
+                    GameManager.instance.LoadSceneAfterBattle();
+                    GameManager.instance.curr_GameState = GameManager.GammeStates.WORLD_STATE;
+                    GameManager.instance.enemyToBattle.Clear();
                 break;
 
             case (BattleStates.LOSE):
@@ -211,7 +232,7 @@ public class BattleStateMachine : MonoBehaviour
     public void EnemyButtons()
     {
         //clean
-        foreach(GameObject enemyBtn in enemyButtons)
+        foreach (GameObject enemyBtn in enemyButtons)
         {
             Destroy(enemyBtn);
         }

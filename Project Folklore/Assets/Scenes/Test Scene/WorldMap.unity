@@ -290,6 +290,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2152303549306676073, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 9166138802754393623, guid: d9f2a9b4ac982f5409a30f664791d97b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
 --- !u!1 &587659161
@@ -403,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmountEnemy: 1
-  battleScene: BattleScene
+  battleScene: TestBattleScene
   possibleEnemy:
   - {fileID: 8154311171108047590, guid: 2c5e1cefaefaffc498ae3ed85549c539, type: 3}
 --- !u!1001 &628668407
@@ -574,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmountEnemy: 3
-  battleScene: BattleScene
+  battleScene: TestBattleScene
   possibleEnemy:
   - {fileID: 3580172047850081356, guid: 2cf3bea873230f14594d3fbc4aa5b7f6, type: 3}
   - {fileID: 8154311171108047590, guid: 2c5e1cefaefaffc498ae3ed85549c539, type: 3}
@@ -996,7 +1000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmountEnemy: 2
-  battleScene: BattleScene
+  battleScene: TestBattleScene
   possibleEnemy:
   - {fileID: 3580172047850081356, guid: 2cf3bea873230f14594d3fbc4aa5b7f6, type: 3}
 --- !u!1 &1934685078

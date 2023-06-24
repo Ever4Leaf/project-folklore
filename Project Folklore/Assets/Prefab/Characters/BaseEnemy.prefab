@@ -121,12 +121,15 @@ MonoBehaviour:
     attackStat: 0
     defendStat: 0
     speedStat: 0
+    attackList: []
     enemyType: 0
     enemyRarity: 0
   currentState: 0
   cur_cooldown: 0
   max_cooldown: 5
-  selector: {fileID: 4664769162611674397}
+  Selector: {fileID: 4664769162611674397}
+  enemyAlive: 1
+  actionStarted: 0
   playerTarget: {fileID: 0}
   animSpeed: 5
   startingPosition: {x: 0, y: 0, z: 0}

@@ -8,7 +8,7 @@ public class PlayerBase :BaseEntityClass
 {
     //player Animator
     [Header("Player Animator")]
-    public Animator playerAnimator;
+    //public Animator playerAnimator;
 
     //Player Action Point
     [Header("Action Point")]
