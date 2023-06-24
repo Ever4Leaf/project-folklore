@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
         switch (curr_GameState)
         {
             case (GammeStates.WORLD_STATE):
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 if (isWalking)
                 {
                     RandomEncounter();

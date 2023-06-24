@@ -48,13 +48,13 @@ public class PlayerStateMachine : MonoBehaviour
     void Start()
     {
         //find spacer
-        playerPanelSpacer = GameObject.Find("GUIs").transform.Find("Canvas Character").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
-        //playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        //playerPanelSpacer = GameObject.Find("GUIs").transform.Find("Canvas Character").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
         //create panel, fill in info
         CreatePlayerStatusPanel();
 
         //set animation to idle
-        player.playerAnimator.SetTrigger("Idle");
+        //player.playerAnimator.SetTrigger("Idle");
 
         cur_cooldown = 0f;
         max_cooldown = 10f / player.speedStat;
@@ -72,7 +72,7 @@ public class PlayerStateMachine : MonoBehaviour
         {
             case (TurnState.PROCESSING):
                     //set animation to idle
-                    player.playerAnimator.SetTrigger("Idle");
+                    //player.playerAnimator.SetTrigger("Idle");
 
                     ProgressBar();
                 break;
@@ -86,7 +86,7 @@ public class PlayerStateMachine : MonoBehaviour
             case (TurnState.WAITING):
                     //idle state
                     //set animation to idle
-                    player.playerAnimator.SetTrigger("Idle");
+                    //player.playerAnimator.SetTrigger("Idle");
                 break;
 
             case (TurnState.SELECTING):
@@ -139,8 +139,8 @@ public class PlayerStateMachine : MonoBehaviour
                     }
 
                     //change color or play animation death
-                    player.playerAnimator.SetTrigger("Dead");
-                    player.playerAnimator.ResetTrigger("Idle");
+                    //player.playerAnimator.SetTrigger("Dead");
+                    //player.playerAnimator.ResetTrigger("Idle");
                     this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
 
                     //call checkalive state
@@ -214,7 +214,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //set animation to walking
         //playerAnimate.SetTrigger("Walking");
-        player.playerAnimator.ResetTrigger("Idle");
+        //player.playerAnimator.ResetTrigger("Idle");
 
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
@@ -223,7 +223,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         //set animation to walking
         //playerAnimate.SetTrigger("Walking");
-        player.playerAnimator.ResetTrigger("Idle");
+        //player.playerAnimator.ResetTrigger("Idle");
 
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
@@ -249,8 +249,8 @@ public class PlayerStateMachine : MonoBehaviour
     public void DoDamage()
     {
         //set animation to attack
-        player.playerAnimator.SetTrigger("Attack");
-        player.playerAnimator.ResetTrigger("Idle");
+        //player.playerAnimator.SetTrigger("Attack");
+        //player.playerAnimator.ResetTrigger("Idle");
 
         float calc_playerDmg = player.attackStat + battleStateMachine.performList[0].usedAttack.attackDamage;
         enemyTarget.GetComponent<EnemyStateMachine>().TakeDamage(calc_playerDmg);

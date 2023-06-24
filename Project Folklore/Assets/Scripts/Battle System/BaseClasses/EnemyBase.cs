@@ -11,7 +11,7 @@ public class EnemyBase : BaseEntityClass
     public enum rarity {COMMON, UNCOMMON, RARE, SUPERRARE }
 
     [Header("Enemy Animator")]
-    public Animator enemyAnimator;   
+    //public Animator enemyAnimator;   
 
     [Header("Enemy Type & Rarity")]
     public type enemyType;
