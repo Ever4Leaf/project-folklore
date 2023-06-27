@@ -16,6 +16,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI displayNameText;
     //[SerializeField] private Animator portraitAnimator;
 
+    [Header("Objective UI")]
+    [SerializeField] private GameObject objectivePanel;
+
     private Animator layoutAnimator;
 
     private Story currentStory;
@@ -81,6 +84,7 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        objectivePanel.SetActive(false);
 
         ContinueStory();
     }
@@ -89,6 +93,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+        objectivePanel.SetActive(true);
         dialogueText.text = "";
     }
 

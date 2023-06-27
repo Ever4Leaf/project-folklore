@@ -1,9 +1,6 @@
 -> main
 
 === main ===
-#layout:narration
-Keesokan hari setelah memesan keris, Ken Arok kembali mendatangi Mpu Gandring untuk meminta keris saktinya. 
-
 #speaker:Ken Arok #layout:dialogue
 Selamat malam Mpu, bagaimana keris saya apakah sudah jadi? 
 
