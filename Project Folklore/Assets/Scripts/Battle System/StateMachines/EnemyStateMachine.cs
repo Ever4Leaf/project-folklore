@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyStateMachine : MonoBehaviour
 {
-    public BattleStateMachine battleStateMachine;
+    private BattleStateMachine battleStateMachine;
     public EnemyBase enemy;
 
     public enum TurnState
@@ -21,7 +21,7 @@ public class EnemyStateMachine : MonoBehaviour
     //for progress bar
     public float cur_cooldown;
     public float max_cooldown;
-    public GameObject Selector;
+    public GameObject enemySelector;
 
     //Enemy check alive
     public bool enemyAlive = true;
@@ -40,7 +40,7 @@ public class EnemyStateMachine : MonoBehaviour
         max_cooldown = max_cooldown / enemy.speedStat;
 
         currentState = TurnState.PROCESSING;
-        Selector.SetActive(false);
+        enemySelector.SetActive(false);
         battleStateMachine = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         startingPosition = transform.position;
     }
@@ -81,7 +81,7 @@ public class EnemyStateMachine : MonoBehaviour
                     //remove enemy game object
                     battleStateMachine.enemyInBattle.Remove(this.gameObject);
                     //deactivte selector
-                    Selector.SetActive(false);
+                    enemySelector.SetActive(false);
 
                     //remove inputs of dead enemy from performlist
                     if (battleStateMachine.enemyInBattle.Count > 0)
@@ -110,7 +110,7 @@ public class EnemyStateMachine : MonoBehaviour
                     enemyAlive = false;
 
                     //reset enemy button
-                    battleStateMachine.EnemyButtons();
+                    battleStateMachine.CreateEnemyButtons();
 
                     //call checkalive state
                     battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.CHECKALIVE;

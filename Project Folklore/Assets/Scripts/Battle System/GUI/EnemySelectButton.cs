@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class EnemySelectButton : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject EnemyPrefab;
 
     public void SelectEnemy()
     {
-        GameObject.Find("BattleManager").GetComponent<BattleStateMachine>().Input2(enemyPrefab);
+        GameObject.Find("BattleManager").GetComponent<BattleStateMachine>().Input2(EnemyPrefab);
     }
 
     public void ShowSelector()
     {
-        enemyPrefab.transform.Find("Selector").gameObject.SetActive(true);
+        EnemyPrefab.transform.Find("EnemySelector").gameObject.SetActive(true);
     }
 
     public void HideSelector()
     {
-        enemyPrefab.transform.Find("Selector").gameObject.SetActive(false);
+        EnemyPrefab.transform.Find("EnemySelector").gameObject.SetActive(false);
     }
 }

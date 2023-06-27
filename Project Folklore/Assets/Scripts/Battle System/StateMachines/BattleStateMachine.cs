@@ -41,7 +41,7 @@ public class BattleStateMachine : MonoBehaviour
 
     [Header("Player UI: Button")]
     public GameObject actionButton;
-    public GameObject enemyButton;
+    public GameObject targetButton;
     public GameObject skillButton;
     
     [Header("Player UI: Spacer")]
@@ -52,31 +52,31 @@ public class BattleStateMachine : MonoBehaviour
     //List of buttons
     [Header("Button List")]
     public List<GameObject> actButtons = new List<GameObject>();
-    public List<GameObject> enemyButtons = new List<GameObject>();
+    public List<GameObject> enemySelectButtons = new List<GameObject>();
 
     [Header("Spawn Points")]
     public List<Transform> spawnPoints = new List<Transform>();
 
-    //private void Awake()
-    //{
-    //    for (int i = 0; i < GameManager.instance.enemyAmount; i++)
-    //    {
-    //        GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.identity) as GameObject;
-    //        newEnemy.name = newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName + "_" + (i + 1);
-    //        newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName = newEnemy.name;
-    //        enemyInBattle.Add(newEnemy);
-    //    }
+    private void Awake()
+    {
+        for (int i = 0; i < GameManager.instance.enemyAmount; i++)
+        {
+            GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.identity) as GameObject;
+            newEnemy.name = newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName + "_" + (i + 1);
+            newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName = newEnemy.name;
+            enemyInBattle.Add(newEnemy);
+        }
 
-    //    Cursor.lockState = CursorLockMode.None;
-    //    Cursor.visible = true;
-    //}
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         curr_battleState = BattleStates.WAIT;
         //find go then populate to respective list
-        enemyInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        //enemyInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         playerInBattle.AddRange(GameObject.FindGameObjectsWithTag("Player"));
 
         playerInput = PlayerGUI.ACTIVATE;
@@ -87,7 +87,7 @@ public class BattleStateMachine : MonoBehaviour
         enemySelectPanel.SetActive(false);
 
         //create button
-        EnemyButtons();
+        CreateEnemyButtons();
     }
 
     // Update is called once per frame
@@ -116,12 +116,6 @@ public class BattleStateMachine : MonoBehaviour
                                 playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
                                 break;
                             }
-                            //else
-                            //{
-                            //    performList[0].attackTarget = enemyInBattle[Random.Range(0, enemyInBattle.Count)];
-                            //    playerStateMachine.enemyTarget = performList[0].attackTarget;
-                            //    playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
-                            //}
                         }
                     }
 
@@ -202,7 +196,7 @@ public class BattleStateMachine : MonoBehaviour
             case (PlayerGUI.ACTIVATE):
                     if (playerManageable.Count > 0)
                     {
-                        playerManageable[0].transform.Find("Selector").gameObject.SetActive(true);
+                        playerManageable[0].transform.Find("PlayerSelector").gameObject.SetActive(true);
                         //create new handleturn instance
                         playerActionSelect = new TurnHandler();  
 
@@ -229,30 +223,29 @@ public class BattleStateMachine : MonoBehaviour
         performList.Add(actionInfo);
     }
 
-    public void EnemyButtons()
+    public void CreateEnemyButtons()
     {
         //clean
-        foreach (GameObject enemyBtn in enemyButtons)
+        foreach (GameObject targetBtns in enemySelectButtons)
         {
-            Destroy(enemyBtn);
+            Destroy(targetBtns);
         }
-        enemyButtons.Clear();
+        enemySelectButtons.Clear();
 
         //create button
-        foreach (GameObject enemy in enemyInBattle)
+        foreach(GameObject enemy in enemyInBattle)
         {
-            GameObject newButton = Instantiate(enemyButton) as GameObject;
-            EnemySelectButton eButton = enemyButton.GetComponent<EnemySelectButton>();
+            GameObject newButton = Instantiate(targetButton) as GameObject;
+            EnemySelectButton enemySelectButton = newButton.GetComponent<EnemySelectButton>();
 
             EnemyStateMachine curr_enemy = enemy.GetComponent<EnemyStateMachine>();
 
             TextMeshProUGUI buttonText = newButton.transform.Find("Text").gameObject.GetComponent<TextMeshProUGUI>();
             buttonText.text = curr_enemy.enemy.unitName;
 
-            eButton.enemyPrefab = enemy;
+            enemySelectButton.EnemyPrefab = enemy;
 
-            newButton.transform.SetParent(targetEnemySpacer, false);
-            enemyButtons.Add(newButton);
+            newButton.transform.SetParent(targetEnemySpacer);
         }
     }
 
@@ -297,7 +290,7 @@ public class BattleStateMachine : MonoBehaviour
         //clean the action panel
         ClearActionPanel();
 
-        playerManageable[0].transform.Find("Selector").gameObject.SetActive(false);
+        playerManageable[0].transform.Find("PlayerSelector").gameObject.SetActive(false);
         playerManageable.RemoveAt(0);
 
         playerInput = PlayerGUI.ACTIVATE;
@@ -335,9 +328,9 @@ public class BattleStateMachine : MonoBehaviour
         SkillButton.transform.SetParent(actionSpacer, false);
         actButtons.Add(SkillButton);
 
-        if(playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList.Count > 0)
+        if (playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList.Count > 0)
         {
-            foreach(BaseAttack skillAtk in playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList)
+            foreach (BaseAttack skillAtk in playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList)
             {
                 GameObject skillAtkButton = Instantiate(skillButton) as GameObject;
                 TextMeshProUGUI skillAtkText = skillAtkButton.transform.Find("SkillText").gameObject.GetComponent<TextMeshProUGUI>();

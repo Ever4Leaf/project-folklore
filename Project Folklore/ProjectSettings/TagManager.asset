@@ -13,6 +13,7 @@ TagManager:
   - VRCamera
   - TeleportScene
   - EncounterZone
+  - Selector
   layers:
   - Default
   - TransparentFX

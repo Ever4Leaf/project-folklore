@@ -47,7 +47,7 @@ MonoBehaviour:
   curr_region: {fileID: 0}
   nextSpawnPoint: 
   playerPrefab: {fileID: 9166138802754393623, guid: d9f2a9b4ac982f5409a30f664791d97b, type: 3}
-  nextPlayerPosition: {x: 0, y: 1.5, z: 0}
+  nextPlayerPosition: {x: 0, y: 0, z: 0}
   lastPlayerPosition: {x: 0, y: 0, z: 0}
   sceneToLoad: 
   lastScene: 

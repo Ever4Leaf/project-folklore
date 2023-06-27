@@ -7317,8 +7317,8 @@ GameObject:
   - component: {fileID: 401115399}
   - component: {fileID: 401115398}
   m_Layer: 0
-  m_Name: TP_WorldMapB
-  m_TagString: Untagged
+  m_Name: TP_Area2B
+  m_TagString: TeleportScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7335,8 +7335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8260446b698a34fb2f2d1e788364ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Overworld Area 1
-  spawnPointName: SP_Area1
+  sceneToLoad: Overworld Area 3 Pasar
+  spawnPointName: SP_Area3A
 --- !u!65 &401115399
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7346,7 +7346,7 @@ BoxCollider:
   m_GameObject: {fileID: 401115397}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -7357,7 +7357,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401115397}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7370,7 +7370,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c0a45225fe5526449b59bec34bff0df0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7408,12 +7408,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401115397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.74, y: 1.67, z: 118.8}
-  m_LocalScale: {x: 172.8998, y: 4.302, z: 2.8681}
+  m_LocalPosition: {x: 5.74, y: 3.14, z: 118.8}
+  m_LocalScale: {x: 172.8998, y: 7.403312, z: 2.8681}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &407727314
 PrefabInstance:
@@ -14782,7 +14782,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890731240}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -14795,7 +14795,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 161f87f6708b4e9439e26db878b48f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14833,8 +14833,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890731240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1, y: 4.9, z: 12.301414}
-  m_LocalScale: {x: 61.13787, y: 17.091867, z: 193.8926}
+  m_LocalPosition: {x: 3, y: 7.4, z: 12.301414}
+  m_LocalScale: {x: 36.4413, y: 17.091867, z: 168.82939}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -27039,7 +27039,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636452159}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -27052,7 +27052,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5a7d4617d1d8be5429053b6f3ae31e40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27095,7 +27095,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1649562022
 PrefabInstance:
@@ -30007,7 +30007,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786838532}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -30020,7 +30020,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5a7d4617d1d8be5429053b6f3ae31e40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -32068,8 +32068,8 @@ GameObject:
   - component: {fileID: 1881449505}
   - component: {fileID: 1881449504}
   m_Layer: 0
-  m_Name: TP_WorldMapA
-  m_TagString: Untagged
+  m_Name: TP_Area2A
+  m_TagString: TeleportScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32086,7 +32086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8260446b698a34fb2f2d1e788364ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: Overworld Area 1
+  sceneToLoad: Overworld Area 1 Rumah Tunggul Ametung
   spawnPointName: SP_Area1
 --- !u!65 &1881449505
 BoxCollider:
@@ -32097,7 +32097,7 @@ BoxCollider:
   m_GameObject: {fileID: 1881449503}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -32108,7 +32108,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881449503}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -32121,7 +32121,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c0a45225fe5526449b59bec34bff0df0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -32159,8 +32159,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881449503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.74, y: 1.67, z: -90.81}
-  m_LocalScale: {x: 172.8998, y: 4.302, z: 2.8681}
+  m_LocalPosition: {x: 5.74, y: 2.11, z: -90.81}
+  m_LocalScale: {x: 172.8998, y: 9.118949, z: 2.8681}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -32897,16 +32897,12 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 2152303549306676073, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 9166138802754393623, guid: d9f2a9b4ac982f5409a30f664791d97b, type: 3}
-    - target: {fileID: 2152303549306676073, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
       propertyPath: nextPlayerPosition.x
       value: 6.37
       objectReference: {fileID: 0}
     - target: {fileID: 2152303549306676073, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
       propertyPath: nextPlayerPosition.y
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2152303549306676073, guid: d781f2e6e4fd4e04e84ad0f97734e209, type: 3}
       propertyPath: nextPlayerPosition.z

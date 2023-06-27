@@ -23164,11 +23164,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1074124301630683751, guid: d17da643a7029ec478d5d51cae0af701, type: 3}
       propertyPath: player.maxHP
-      value: 999
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 1074124301630683751, guid: d17da643a7029ec478d5d51cae0af701, type: 3}
       propertyPath: player.currentHP
-      value: 999
+      value: 900
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d17da643a7029ec478d5d51cae0af701, type: 3}
@@ -33726,6 +33726,8 @@ MonoBehaviour:
   actionSpacer: {fileID: 3770987055961347192}
   skillSpacer: {fileID: 3770987055617865375}
   targetEnemySpacer: {fileID: 3770987055707215122}
+  actButtons: []
+  enemyButtons: []
   spawnPoints:
   - {fileID: 1876731908}
   - {fileID: 2127971065}

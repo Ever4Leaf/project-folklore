@@ -9,29 +9,32 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 218c591a419f50046a466056d18c585a
   - enabled: 1
-    path: Assets/Scenes/DialogueScene.unity
-    guid: 2c765cc98947b7447885eccda57c893f
-  - enabled: 1
-    path: Assets/Scenes/Test Scene/WorldMap.unity
-    guid: d636d74e21bb2bc4f9ecb20fb80aacb9
-  - enabled: 1
-    path: Assets/Scenes/Test Scene/Village1.unity
-    guid: 842313acfd338c4478b28070cfc178a2
-  - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: e04bd08120bfeb242886f3d5bd63c018
-  - enabled: 1
-    path: Assets/Scenes/Test Scene/TestBattleScene.unity
-    guid: a28fd25cdc7d86144969a5fd18d8bf98
-  - enabled: 1
-    path: Assets/Scenes/Overworld Area 1.unity
+    path: Assets/Scenes/Overworld Area 1 Rumah Tunggul Ametung.unity
     guid: ef62a783da7576a4c99ada059005bdcd
   - enabled: 1
-    path: Assets/Scenes/Overworld Area 2.unity
+    path: Assets/Scenes/Overworld Area 2 Jalan Perumahan.unity
     guid: 0d3d38ed27d9ac8479199f1577f03117
+  - enabled: 1
+    path: Assets/Scenes/Overworld Area 3 Pasar.unity
+    guid: 130789e3b5112804cb36165a8a0dfdd4
+  - enabled: 1
+    path: Assets/Scenes/Overworld Area 4 Jalan Hutan A.unity
+    guid: af791c3c7a4a2b446a2dd688493cb9c2
+  - enabled: 1
+    path: Assets/Scenes/Overworld Area 5 Jalan Hutan A Buntu.unity
+    guid: 2b382d8e5a1fcdc479d5dd6cf9043713
+  - enabled: 1
+    path: Assets/Scenes/Overworld Area 6 Jalan Hutan B.unity
+    guid: a2824a71723be2048acf3963a7e2ee42
   - enabled: 1
     path: Assets/Scenes/RE_VillageArea.unity
     guid: 2788a6afb61b3d24ba33851a2a9c81e8
+  - enabled: 1
+    path: Assets/Scenes/Test Scene/WorldMapTest.unity
+    guid: d636d74e21bb2bc4f9ecb20fb80aacb9
+  - enabled: 1
+    path: Assets/Scenes/Test Scene/TestBattleScene.unity
+    guid: a28fd25cdc7d86144969a5fd18d8bf98
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2bf12d07d099f3b4d8e0d9aea26b8395, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 660d4f3790aae2544a77b8c4f8dc559e, type: 2}
