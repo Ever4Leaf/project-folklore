@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [Header("Battle Setup")]
     public int enemyAmount;
     public GammeStates curr_GameState;
+    //public List<GameObject> playerParty = new List<GameObject>();
     public List<GameObject> enemyToBattle = new List<GameObject>();
 
     private void Awake()
@@ -57,10 +58,10 @@ public class GameManager : MonoBehaviour
         //set this instance to be not destroyable
         DontDestroyOnLoad(gameObject);
 
-        if (!GameObject.Find("Ken Arok"))
+        if (!GameObject.FindGameObjectWithTag("Player"))
         {
             GameObject Player = Instantiate(playerPrefab, nextPlayerPosition, Quaternion.identity) as GameObject;
-            Player.name = "Player";
+            Player.name = playerPrefab.name;
         }
     }
 
@@ -117,9 +118,9 @@ public class GameManager : MonoBehaviour
     {
         if (isWalking && canGetEncounter)
         {
-            if (Random.Range(0,1000) < 10)
+            if (Random.Range(0,10000) < 10)
             {
-                Debug.Log("Boom");
+                Debug.Log("Battle");
                 gotAttacked = true;
             }
         }
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
             enemyToBattle.Add(curr_region.possibleEnemy[Random.Range(0, curr_region.possibleEnemy.Count)]);
         }
         //Player
-        lastPlayerPosition = GameObject.Find("Player").gameObject.transform.position;
+        lastPlayerPosition = GameObject.FindGameObjectWithTag("Player").gameObject.transform.position;
         nextPlayerPosition = lastPlayerPosition;
         lastScene = SceneManager.GetActiveScene().name;
         //Load Level

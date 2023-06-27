@@ -26,7 +26,7 @@ public class PlayerStateMachine : MonoBehaviour
     public float max_cooldown;
     private Image hpProgressBar;
     private Image apProgressBar;
-    public GameObject selector;
+    public GameObject playerSelector;
 
     //Player Dead
     public bool alive = true;
@@ -60,7 +60,7 @@ public class PlayerStateMachine : MonoBehaviour
         max_cooldown = 10f / player.speedStat;
 
         startingPosition = transform.position;
-        selector.SetActive(false);
+        playerSelector.SetActive(false);
         currentState = TurnState.PROCESSING;
         battleStateMachine = GameObject.FindObjectOfType<BattleStateMachine>();
     }
@@ -112,7 +112,7 @@ public class PlayerStateMachine : MonoBehaviour
                     //not manageable
                     battleStateMachine.playerManageable.Remove(this.gameObject);
                     //deactivte selector
-                    selector.SetActive(false);
+                    playerSelector.SetActive(false);
                     
                     //reset GUI
                     battleStateMachine.actionPanel.SetActive(false);
