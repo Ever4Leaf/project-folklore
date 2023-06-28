@@ -1,12 +1,8 @@
+EXTERNAL moveBattleScene(sceneToLoad)
+
 -> main
 
 === main ===
-#layout:narration
-Keesokan paginya, seluruh pengawal di kediaman Tunggul Ametung dikagetkan dengan teriakan Ken Dedes. Mereka buru-buru ke kamar Tunggul Ametung dan mendapati Tunggul Ametung sudah mati. Disamping jenazahnya terdapat keris yang tidak asing di mata mereka. Keris itu mirip seperti milik Kebo Ijo.
-Kedua pengawal tersebut pergi menemui pejabat Tumapel di kantor pusat Kabupaten Tumapel. Mereka melaporkan kejadian pembunuhan Tunggul Ametung dan menuduh Kebo Ijo yang membunuhnya.
-Mendengar itu, pejabat segera memanggil Ken Arok dan memintanya untuk menghukum langsung Kebo Ijo atas tuduhan pembunuhan.
-Ken Arok dan para pengawal segera berangkat ke rumah Kebo Ijo. Saat itu Kebo Ijo masih tertidur lelap karena mabuk arak. Mereka menggedor pintu rumah Kebo Ijo keras-keras hingga akhirnya Kebo Ijo terbangun.
-
 #speaker:Kebo Ijo #layout:dialogue
 Hei-hei, ada apa ini berisik sekali pagi ini.
 
@@ -33,5 +29,7 @@ Sepertinya kamu terlalu mabuk hingga tidak sadar telah melakukannya. Sudahlah, t
 
 #layout:narration
 Kebo Ijo dipaksa ikut bersama rombongan pengawal, namun dia melawan dan mengambil tombaknya. Ken Arok pun menghadangnya dan melawan Kebo Ijo.
+
+~ moveBattleScene("Kebo Ijo Battle")
 
 -> END

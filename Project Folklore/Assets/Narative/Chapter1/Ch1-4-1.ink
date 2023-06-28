@@ -11,13 +11,7 @@ Akhirnya dia sampai di kamar Tunggul Ametung. Dia membuka pintu kamar secara per
 Sudah lama kunantikan hari ini, habislah nyawamu Tunggul Ametung.
 
 #layout:narration
-Dia berjalan pelan-pelan mendekati Tunggul Ametung yang tertidur bersama istrinya, Ken Dedes. Naas saat berjalan mendekati tempat tidur, Ken Dedes yang belum tertidur lelap terbangun.
-
-#speaker:Ken Dedes #layout:dialogue
-AHHHH, ADA PENCURI!
-
-#layout:narration
-Teriakan itu membangunkan Tunggul Ametung.
+Naas saat itu Tunggul Ametung masih terbangun.
 
 #speaker:Tunggul Ametung #layout:dialogue
 Hei, siapa kau masuk ke kamarku di tengah malam begini!

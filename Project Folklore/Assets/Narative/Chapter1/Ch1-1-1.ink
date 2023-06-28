@@ -1,4 +1,4 @@
-EXTERNAL moveBattleScene()
+EXTERNAL moveBattleScene(sceneToLoad)
 
 -> main
 
@@ -38,5 +38,5 @@ Mpu telah saya berikan satu malam untuk menyelesaikan keris ini. Saya yakin deng
 #layout:narration
 Mpu Gandring berusaha meraih Ken Arok untuk mengambil kembali keris sakti dari Ken Arok. Namun, Ken Arok melawan dan hendak menusuk Mpu Gandring sehingga Mpu Gandring terpukul ke belakang 
 
-~ moveBattleScene()
+~ moveBattleScene("Mpu Gandring House Battle")
 -> END
