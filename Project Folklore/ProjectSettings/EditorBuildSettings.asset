@@ -27,6 +27,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Overworld Area 6 Jalan Hutan B.unity
     guid: a2824a71723be2048acf3963a7e2ee42
   - enabled: 1
+    path: Assets/Scenes/Mpu Gandring House.unity
+    guid: 9665917ae0f1687428d0822aac6330a0
+  - enabled: 1
+    path: Assets/Scenes/Mpu Gandring House Battle.unity
+    guid: d76d46ede7c4fae4eb5c400af10bf080
+  - enabled: 1
+    path: Assets/Scenes/Mpu Gandring House After Battle.unity
+    guid: f0711362d7d0f874cbc2e1f0888ebcee
+  - enabled: 1
+    path: Assets/Scenes/Tunggul Ametung House.unity
+    guid: dbe6903bcff249b45abd4b3d4c28048c
+  - enabled: 1
     path: Assets/Scenes/RE_VillageArea.unity
     guid: 2788a6afb61b3d24ba33851a2a9c81e8
   - enabled: 1

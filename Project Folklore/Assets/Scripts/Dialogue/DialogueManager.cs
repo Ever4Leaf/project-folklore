@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject objectivePanel;
 
     private Animator layoutAnimator;
+    public Animator loadingAnimator;
+
+    private InkExternalFunctions inkExternalFunctions;
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
@@ -44,6 +48,8 @@ public class DialogueManager : MonoBehaviour
         }
 
         instance = this;
+
+        inkExternalFunctions = new InkExternalFunctions();
     }
 
     public static DialogueManager GetInstance()
@@ -84,18 +90,21 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-        objectivePanel.SetActive(false);
+        //objectivePanel.SetActive(false);
+
+        //inkExternalFunctions.Bind(currentStory);
+        
+        ExternalFunctionLoading();
+        ExternalFunctionMoveScene();
+        
 
         ContinueStory();
     }
 
-    private void ExitDialogueMode()
-    {
-        dialogueIsPlaying = false;
-        dialoguePanel.SetActive(false);
-        objectivePanel.SetActive(true);
-        dialogueText.text = "";
-    }
+    // private void ExitDialogueMode()
+    // {
+        
+    // }
 
     private void ContinueStory()
     {
@@ -106,15 +115,54 @@ public class DialogueManager : MonoBehaviour
             {
                 StopCoroutine(displayLineCoroutine);
             }
-
-            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-            //handle tags
-            HandleTags(currentStory.currentTags);
+            string nextLine = currentStory.Continue();
+            //handle case where last line is external function
+            if(nextLine.Equals("") && !currentStory.canContinue)
+            {
+                StartCoroutine(ExitDialogueMode());
+            }
+            //otherwise handle normal case for continue story
+            else
+            {
+                displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
+                //handle tags
+                HandleTags(currentStory.currentTags);
+            }
+            
         }
         else
         {
-            ExitDialogueMode();
+            StartCoroutine(ExitDialogueMode());
         }
+    }
+
+    private void ExternalFunctionLoading()
+    {
+        currentStory.BindExternalFunction("playLoading", () =>
+        {
+            
+            if(loadingAnimator != null)
+            {
+                StartCoroutine(Loading());
+            }
+            else
+            {
+                Debug.LogWarning("Loading animator not found");
+            }
+
+            Debug.Log("External function works");
+        });
+    }
+
+    private void ExternalFunctionMoveScene()
+    {
+        currentStory.BindExternalFunction("moveBattleScene", () =>
+        {
+            
+            SceneManager.LoadScene("Mpu Gandring House Battle");
+
+            Debug.Log("External function works");
+        });
     }
 
     private IEnumerator DisplayLine(string line)
@@ -150,6 +198,27 @@ public class DialogueManager : MonoBehaviour
         canSkip = false;
         yield return new WaitForSeconds(0.05f);
         canSkip = true;
+    }
+
+    private IEnumerator Loading()
+    {
+        loadingAnimator.SetTrigger("Start");
+                
+        yield return new WaitForSeconds(3f);
+
+        loadingAnimator.SetTrigger("End");
+    }
+
+    private IEnumerator ExitDialogueMode()
+    {
+        yield return new WaitForSeconds(0.2f);
+        
+        dialogueIsPlaying = false;
+        dialoguePanel.SetActive(false);
+        //objectivePanel.SetActive(true);
+        dialogueText.text = "";
+
+        currentStory.UnbindExternalFunction("playLoading");
     }
 
     private void HandleTags(List<string> currentTags)

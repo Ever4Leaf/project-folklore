@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BaseEntityClass
 {
+    //player Animator
+    [Header("Char Animator")]
+    public Animator charAnimator;
+
     //Generic information
     [Header("Unit Informations")]
     public string unitName;
