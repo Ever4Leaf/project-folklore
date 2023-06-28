@@ -1,3 +1,5 @@
+EXTERNAL playLoading()
+
 -> main
 
 === main ===
@@ -47,6 +49,7 @@ Ini untuk uang mukanya, sebaiknya Mpu segera bekerja karena waktu sudah mulai be
 #layout:narration
 Ken Arok pergi meninggalkan rumah Mpu Gandring. Mpu Gandring akhirnya harus berusaha untuk membuat keris itu dalam waktu semalam dengan menggunakan kesaktiannya. 
 
+~ playLoading()
 -> END
 
 
