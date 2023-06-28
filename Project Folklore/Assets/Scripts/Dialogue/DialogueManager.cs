@@ -156,10 +156,10 @@ public class DialogueManager : MonoBehaviour
 
     private void ExternalFunctionMoveScene()
     {
-        currentStory.BindExternalFunction("moveBattleScene", () =>
+        currentStory.BindExternalFunction("moveBattleScene", (string sceneToLoad) =>
         {
             
-            SceneManager.LoadScene("Mpu Gandring House Battle");
+            SceneManager.LoadScene(sceneToLoad);
 
             Debug.Log("External function works");
         });
@@ -207,6 +207,11 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         loadingAnimator.SetTrigger("End");
+    }
+
+    private IEnumerator MoveScene()
+    {
+        yield return new WaitForSeconds(3f);
     }
 
     private IEnumerator ExitDialogueMode()

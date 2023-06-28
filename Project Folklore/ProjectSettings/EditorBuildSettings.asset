@@ -39,6 +39,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Tunggul Ametung House.unity
     guid: dbe6903bcff249b45abd4b3d4c28048c
   - enabled: 1
+    path: Assets/Scenes/Tunggul Ametung House Battle.unity
+    guid: 5b639b8b49af3f04ba7daf0bf81aec52
+  - enabled: 1
+    path: Assets/Scenes/Kebo Ijo Battle.unity
+    guid: c68aa2f74e8336b43b962add9e7e16af
+  - enabled: 1
     path: Assets/Scenes/RE_VillageArea.unity
     guid: 2788a6afb61b3d24ba33851a2a9c81e8
   - enabled: 1
