@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public UI_Manager ui_manager;
 
     public RegionData curr_region;
     public string nextSpawnPoint;
@@ -25,12 +26,12 @@ public class GameManager : MonoBehaviour
     public bool isWalking = false;
     public bool canGetEncounter = false;
     public bool gotAttacked = false;
+    public bool gameIsPaused = false;
 
     //ENUM
     public enum GammeStates 
     {
         WORLD_STATE,
-        VILLAGE_STATE,
         BATTLE_STATE,
         MENU_STATE,
         IDLE_STATE
@@ -70,8 +71,18 @@ public class GameManager : MonoBehaviour
         switch (curr_GameState)
         {
             case (GammeStates.WORLD_STATE):
+                Time.timeScale = 1f;
+                gameIsPaused = false;
+
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+
+                if (Input.GetKey(KeyCode.LeftAlt))
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                }
+
                 if (isWalking)
                 {
                     RandomEncounter();
@@ -83,10 +94,6 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case (GammeStates.VILLAGE_STATE):
-
-                break;
-
             case (GammeStates.BATTLE_STATE):
                 //Load Battle Scene
                 StartBattle();
@@ -95,6 +102,18 @@ public class GameManager : MonoBehaviour
                 break;
 
             case (GammeStates.MENU_STATE):
+                Time.timeScale = 0f;
+                gameIsPaused = true;
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
+                if (Input.GetKeyDown(KeyCode.Backspace))
+                {
+                    ui_manager.panelInventory.SetActive(false);
+
+                    curr_GameState = GammeStates.WORLD_STATE;
+                }
 
                 break;
 
@@ -118,7 +137,7 @@ public class GameManager : MonoBehaviour
     {
         if (isWalking && canGetEncounter)
         {
-            if (Random.Range(0,10000) < 10)
+            if (Random.Range(0,100)+1 <= 10)
             {
                 Debug.Log("Battle");
                 gotAttacked = true;

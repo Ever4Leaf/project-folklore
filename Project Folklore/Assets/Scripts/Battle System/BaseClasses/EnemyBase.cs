@@ -10,9 +10,6 @@ public class EnemyBase : BaseEntityClass
     public enum type {SWORDSMAN, SPEARMAN, WIZARD, BOSS }
     public enum rarity {COMMON, UNCOMMON, RARE, SUPERRARE }
 
-    [Header("Enemy Animator")]
-    //public Animator enemyAnimator;   
-
     [Header("Enemy Type & Rarity")]
     public type enemyType;
     public rarity enemyRarity;
