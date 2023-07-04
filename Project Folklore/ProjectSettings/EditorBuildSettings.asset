@@ -53,6 +53,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test Scene/TestBattleScene.unity
     guid: a28fd25cdc7d86144969a5fd18d8bf98
+  - enabled: 1
+    path: Assets/Scenes/Test Scene/VRTestScene.unity
+    guid: ba9f7bf03d97fbf4e9a6608c221f58a1
+  - enabled: 1
+    path: Assets/Scenes/Hutan A Battle.unity
+    guid: e2b5a7931f61e61409b3e7b6156700ac
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2bf12d07d099f3b4d8e0d9aea26b8395, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 660d4f3790aae2544a77b8c4f8dc559e, type: 2}

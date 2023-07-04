@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueTrigger : MonoBehaviour
 {
+    [Header("VR Control")]
+    public InputActionProperty L_TriggerButton;
+    public InputActionProperty R_TriggerButton;
+
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
 
@@ -23,7 +28,7 @@ public class DialogueTrigger : MonoBehaviour
         if(playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
             //visualCue.SetActive(true);
-            if(Input.GetKeyDown(KeyCode.I))
+            if(Input.GetKeyDown(KeyCode.I) || R_TriggerButton.action.WasPressedThisFrame() || L_TriggerButton.action.WasPressedThisFrame())
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }

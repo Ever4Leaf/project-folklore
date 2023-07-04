@@ -1,5 +1,5 @@
-EXTERNAL moveBattleScene(sceneToLoad)
-EXTERNAL playLoading()
+EXTERNAL moveScene(sceneToLoad)
+
 
 
 -> main
@@ -50,6 +50,6 @@ Terima kasih Ken Arok, kau memang kawan baikku!
 Kebo Ijo membawa keris itu dan memamerkannya kepada masyarakat sekitar dan rekan kerjanya selama 3 hari.
 
 
-~ playLoading()
-~ moveBattleScene("Tunggul Ametung House")
+
+~ moveScene("Tunggul Ametung House")
 -> END

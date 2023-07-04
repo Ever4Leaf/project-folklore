@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KerisMpuGandring : BasicAttack
+public class KerisMpuGandring : PukulanMob
 {
     public KerisMpuGandring ()
     {
