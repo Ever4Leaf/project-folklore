@@ -4,9 +4,14 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
+    [Header("VR Control")]
+    public InputActionProperty L_TriggerButton;
+    public InputActionProperty R_TriggerButton;
+
     [Header("Params")]
     [SerializeField] private float typingSpeed = 0.04f;
 
@@ -68,7 +73,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update() 
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) || R_TriggerButton.action.WasPressedThisFrame() || L_TriggerButton.action.WasPressedThisFrame())
         {
             submitSkip = true;
         }
@@ -79,7 +84,7 @@ public class DialogueManager : MonoBehaviour
             return;
        }
 
-       if(canContinueToNextLine && Input.GetMouseButtonDown(0))
+       if(canContinueToNextLine && Input.GetMouseButtonDown(0) || R_TriggerButton.action.WasPressedThisFrame() || L_TriggerButton.action.WasPressedThisFrame())
        {
             ContinueStory();
        }
@@ -96,6 +101,7 @@ public class DialogueManager : MonoBehaviour
         
         ExternalFunctionLoading();
         ExternalFunctionMoveScene();
+        ExternalFunctionMoveNextScene();
         
 
         ContinueStory();
@@ -158,7 +164,20 @@ public class DialogueManager : MonoBehaviour
     {
         currentStory.BindExternalFunction("moveBattleScene", (string sceneToLoad) =>
         {
-            
+            GameManager.instance.isStaticEncounter = true;
+
+            //SceneManager.LoadScene(sceneToLoad);
+
+            Debug.Log("External function works");
+        });
+    }
+
+    private void ExternalFunctionMoveNextScene()
+    {
+        currentStory.BindExternalFunction("moveScene", (string sceneToLoad) =>
+        {
+            //GameManager.instance.isStaticEncounter = true;
+
             SceneManager.LoadScene(sceneToLoad);
 
             Debug.Log("External function works");

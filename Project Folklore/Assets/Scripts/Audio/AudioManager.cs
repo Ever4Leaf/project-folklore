@@ -8,12 +8,12 @@ public class AudioManager : MonoBehaviour
     public AudioMixer audioMixer;
 
     [Header("Audio Source")]
-    [SerializeField] AudioSource bgmSource;
-    [SerializeField] AudioSource walkSource;
+    [SerializeField] AudioSource[] bgmSource;
+    [SerializeField] AudioSource[] sfxSource;
 
-    [Header("Audio Clip")]
-    public AudioClip background;
-    public AudioClip walk;
+    //[Header("Audio Clip")]
+    //public AudioClip[] background;
+    //public AudioClip[] sfx;
 
     public static AudioManager instance;
 
@@ -24,7 +24,12 @@ public class AudioManager : MonoBehaviour
 
     private void Awake() 
     {
-        if(instance == null)
+        
+    }
+
+    private void Start() 
+    {
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -35,12 +40,6 @@ public class AudioManager : MonoBehaviour
         }
 
         LoadVolume();
-    }
-
-    private void Start() 
-    {
-        bgmSource.clip = background;
-        bgmSource.Play();
     }
 
     private void LoadVolume() //volume saved in VolumeSetting script
@@ -54,13 +53,38 @@ public class AudioManager : MonoBehaviour
         audioMixer.SetFloat(VolumeSettings.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
     }
 
-    public void ContohSFX()
+    public void PlaySFX(int soundToPlay)
     {
-        walkSource.clip = walk;
-        walkSource.PlayOneShot(walk);
+        
+        if (soundToPlay < sfxSource.Length)
+        {
+                sfxSource[soundToPlay].Play();
+        }
+        
     }
 
-    
+    public void PlayBGM(int musicToPlay)
+    {
+        if(!bgmSource[musicToPlay].isPlaying)
+        {
+            StopBGM();
+
+            if(musicToPlay < bgmSource.Length)
+            {
+                bgmSource[musicToPlay].Play();
+            }
+        }
+    }
+
+    public void StopBGM()
+    {
+        for (int i = 0; i < bgmSource.Length; i++)
+        {
+            bgmSource[i].Stop();
+        }
+    }
+
+
 }
     
 

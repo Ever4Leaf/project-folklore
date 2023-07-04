@@ -10,22 +10,20 @@ public class UI_FollowCamera : MonoBehaviour
     public float spawnDistance;
 
     [Header("Canvas UI")]
-    //public GameObject playerStatus;
     public GameObject menu;
 
     //[Header("VR Control Input")]
     //public InputActionProperty showButton;
 
-    void Update()
+    void LateUpdate()
     {
-        headCam = GameObject.FindGameObjectWithTag("VRCamera");
+        headCam = GameObject.Find("PlayerCam");
+        menu = GameObject.Find("Canvas");
 
         menu.transform.position = headCam.transform.position + new Vector3(headCam.transform.forward.x, 0f, headCam.transform.forward.z).normalized * spawnDistance;
         menu.transform.LookAt(new Vector3(headCam.transform.position.x, menu.transform.position.y, headCam.transform.position.z));
         menu.transform.forward *= -1;
     }
-
-
 
     //void playerStatusVRUI()
     //{

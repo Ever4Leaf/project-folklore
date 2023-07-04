@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Keris Mpu Gandring
   attackDescription: Keris Sakti
-  attackDamage: 99999
+  attackDamage: 999999
   apCost: 10
   apRecover: 0

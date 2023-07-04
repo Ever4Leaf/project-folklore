@@ -91,24 +91,40 @@ public class PlayerManager : MonoBehaviour
 			GameManager.instance.LoadNextScene();
 		}
 
-		if (other.tag == "EncounterZone")
+		if (other.tag == "RandomEncounterZone")
         {
 			RegionData region = other.gameObject.GetComponent<RegionData>();
 			GameManager.instance.curr_region = region;
         }
+
+		if (other.tag == "StaticEncounterZone")
+		{
+			RegionData region = other.gameObject.GetComponent<RegionData>();
+			GameManager.instance.curr_region = region;
+		}
 	}
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "EncounterZone")
+        if (other.tag == "RandomEncounterZone")
         {
 			GameManager.instance.canGetEncounter = true;
         }
+
+		if (other.tag == "StaticEncounterZone")
+		{
+			GameManager.instance.canGetEncounter = false;
+		}
 	}
 
     private void OnTriggerExit(Collider other)
     {
-		if (other.tag == "EncounterZone")
+		if (other.tag == "RandomEncounterZone")
+		{
+			GameManager.instance.canGetEncounter = false;
+		}
+
+		if (other.tag == "StaticEncounterZone")
 		{
 			GameManager.instance.canGetEncounter = false;
 		}

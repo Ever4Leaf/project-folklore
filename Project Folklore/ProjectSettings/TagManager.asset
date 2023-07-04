@@ -12,8 +12,9 @@ TagManager:
   - DeadEnemy
   - VRCamera
   - TeleportScene
-  - EncounterZone
   - Selector
+  - RandomEncounterZone
+  - StaticEncounterZone
   layers:
   - Default
   - TransparentFX

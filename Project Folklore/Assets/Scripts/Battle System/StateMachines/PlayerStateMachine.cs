@@ -6,8 +6,10 @@ using TMPro;
 
 public class PlayerStateMachine : MonoBehaviour
 {
+    private static PlayerStateMachine instance;
     private BattleStateMachine battleStateMachine;
     public PlayerBase player;
+    public MovesetBase move;
 
     public enum TurnState
     {
@@ -44,20 +46,36 @@ public class PlayerStateMachine : MonoBehaviour
     public GameObject playerPanel;
     public Transform playerPanelSpacer;
 
+    private void Awake()
+    {
+        //check if instance exist
+        if (instance == null)
+        {
+            //if not then set instance to this
+            instance = this;
+        }
+        //if there is but not this instance
+        else if (instance != this)
+        {
+            //then destroy it
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         //find spacer
-        //playerPanelSpacer = GameObject.Find("GUIs").transform.Find("Canvas Character").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
-        playerPanelSpacer = GameObject.Find("Battle Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
+        playerPanelSpacer = GameObject.Find("Canvas").transform.Find("Panel Character List").transform.Find("Panel Character List Spacer");
         //create panel, fill in info
         CreatePlayerStatusPanel();
 
         //set animation to idle
-        //player.playerAnimator.SetTrigger("Idle");
+        player.charAnimator.SetTrigger("Idle");
 
+        //set action cd value
         cur_cooldown = 0f;
-        max_cooldown = 10f / player.speedStat;
+        max_cooldown = max_cooldown / player.speedStat;
 
         startingPosition = transform.position;
         playerSelector.SetActive(false);
@@ -71,10 +89,11 @@ public class PlayerStateMachine : MonoBehaviour
         switch (currentState)
         {
             case (TurnState.PROCESSING):
-                    //set animation to idle
-                    //player.playerAnimator.SetTrigger("Idle");
+                //set animation to idle
+                player.charAnimator.SetTrigger("Idle");
+                player.charAnimator.GetComponent<Transform>().rotation = this.gameObject.GetComponent<Transform>().rotation;
 
-                    ProgressBar();
+                ProgressBar();
                 break;
 
             case (TurnState.ADDTOLIST):
@@ -84,9 +103,10 @@ public class PlayerStateMachine : MonoBehaviour
                 break;
 
             case (TurnState.WAITING):
-                    //idle state
-                    //set animation to idle
-                    //player.playerAnimator.SetTrigger("Idle");
+                //idle state
+                //set animation to idle
+                player.charAnimator.SetTrigger("Idle");
+                player.charAnimator.GetComponent<Transform>().rotation = this.gameObject.GetComponent<Transform>().rotation;
                 break;
 
             case (TurnState.SELECTING):
@@ -139,8 +159,7 @@ public class PlayerStateMachine : MonoBehaviour
                     }
 
                     //change color or play animation death
-                    //player.playerAnimator.SetTrigger("Dead");
-                    //player.playerAnimator.ResetTrigger("Idle");
+                    player.charAnimator.SetTrigger("Dead");
                     this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
 
                     //call checkalive state
@@ -183,8 +202,8 @@ public class PlayerStateMachine : MonoBehaviour
         DoDamage();
 
         //wait
-        yield return new WaitForSeconds(1.5f);
-        
+        yield return new WaitForSeconds(1.5f);  
+
         //animate back to starting position
         Vector3 startPos = startingPosition;
         while (MoveTowardStart(startPos)) { yield return null; }
@@ -193,12 +212,13 @@ public class PlayerStateMachine : MonoBehaviour
         battleStateMachine.performList.RemoveAt(0);
 
         //reset BSM then wait
-        if(battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.WIN && battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.LOSE)
+        if (battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.WIN && battleStateMachine.curr_battleState != BattleStateMachine.BattleStates.LOSE)
         {
             battleStateMachine.curr_battleState = BattleStateMachine.BattleStates.WAIT;
 
             //reset player state
             cur_cooldown = 0f;
+
             currentState = TurnState.PROCESSING;
         }
         else
@@ -213,8 +233,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool MoveTowardTarget(Vector3 target)
     {
         //set animation to walking
-        //playerAnimate.SetTrigger("Walking");
-        //player.playerAnimator.ResetTrigger("Idle");
+        //player.charAnimator.SetTrigger("Walking");
 
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
@@ -222,8 +241,7 @@ public class PlayerStateMachine : MonoBehaviour
     bool MoveTowardStart(Vector3 target)
     {
         //set animation to walking
-        //playerAnimate.SetTrigger("Walking");
-        //player.playerAnimator.ResetTrigger("Idle");
+        //player.charAnimator.SetTrigger("Walking");
 
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
@@ -232,8 +250,10 @@ public class PlayerStateMachine : MonoBehaviour
     public void TakeDamage(float getDamageAmount)
     {
         //set animation to take damage
+        player.charAnimator.SetTrigger("Hit");
+        AudioManager.instance.PlaySFX(2);
 
-        float calc_dmgTaken = (getDamageAmount - player.defendStat);
+        float calc_dmgTaken = (getDamageAmount / player.defendStat);
         player.currentHP -= calc_dmgTaken;
 
         if (player.currentHP <= 0f)
@@ -249,10 +269,12 @@ public class PlayerStateMachine : MonoBehaviour
     public void DoDamage()
     {
         //set animation to attack
-        //player.playerAnimator.SetTrigger("Attack");
-        //player.playerAnimator.ResetTrigger("Idle");
+        player.charAnimator.SetTrigger("Attack");
+        Debug.Log("animasi menyerang on");
+        AudioManager.instance.PlaySFX(6);
 
-        float calc_playerDmg = player.attackStat + battleStateMachine.performList[0].usedAttack.attackDamage;
+
+        float calc_playerDmg = battleStateMachine.performList[0].usedAttack.movesetValue * player.attackStat * player.unitLevel;
         enemyTarget.GetComponent<EnemyStateMachine>().TakeDamage(calc_playerDmg);
     }
 
@@ -271,7 +293,7 @@ public class PlayerStateMachine : MonoBehaviour
         playerStatus = playerPanel.GetComponent<PlayerPanelStatus>();
 
         playerStatus.playerName.text = player.unitName;
-        playerStatus.playerHP.text = player.currentHP + "/" + player.maxHP; // Ex. 40/100
+        playerStatus.playerHP.text = player.currentHP.ToString("0") + "/" + player.maxHP; // Ex. 40/100
 
         hpProgressBar = playerStatus.hpBar;
         apProgressBar = playerStatus.apBar;
@@ -282,7 +304,16 @@ public class PlayerStateMachine : MonoBehaviour
 
     void UpdatePlayerPanel()
     {
-        playerStatus.playerHP.text = player.currentHP + "/" + player.maxHP; // Ex. 40/100
+        playerStatus.playerHP.text = player.currentHP.ToString("0") + "/" + player.maxHP; // Ex. 40/100
         PlayerStatusBar();
     }
+
+    bool AnimatorIsPlaying()
+    {
+        return player.charAnimator.GetCurrentAnimatorStateInfo(0).length > player.charAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        
+    }
+
+    
+
 }

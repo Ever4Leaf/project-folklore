@@ -1,3 +1,5 @@
+EXTERNAL moveBattleScene(sceneToLoad)
+
 -> main
 
 === main ===
@@ -19,4 +21,6 @@ Hei, siapa kau masuk ke kamarku di tengah malam begini!
 #layout:narration
 Karena serangan diam-diamnya terbongkar, tanpa pikir panjang Ken Arok menyergap Tunggul Ametung. 
 Tunggul Ametung sudah siap dengan pedang yang dia taruh di sebelah tempat tidurnya dan menangkis serangan Ken Arok.
+
+~ moveBattleScene("Tunggul Ametung House Battle")
 -> END

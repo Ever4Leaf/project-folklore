@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public UI_Manager ui_manager;
+    private UI_Manager UI_Manager;
 
     public RegionData curr_region;
     public string nextSpawnPoint;
@@ -21,12 +21,14 @@ public class GameManager : MonoBehaviour
     [Header("Scenes")]
     public string sceneToLoad;
     public string lastScene;
+    public string newScene;
 
     [Header("States")]
     public bool isWalking = false;
     public bool canGetEncounter = false;
     public bool gotAttacked = false;
     public bool gameIsPaused = false;
+    public bool isStaticEncounter = false;
 
     //ENUM
     public enum GammeStates 
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
     [Header("Battle Setup")]
     public int enemyAmount;
     public GammeStates curr_GameState;
-    //public List<GameObject> playerParty = new List<GameObject>();
+    public List<GameObject> playerParty = new List<GameObject>();
     public List<GameObject> enemyToBattle = new List<GameObject>();
 
     private void Awake()
@@ -92,6 +94,11 @@ public class GameManager : MonoBehaviour
                 {
                     curr_GameState = GammeStates.BATTLE_STATE;
                 }
+
+                if (isStaticEncounter)
+                {
+                    StaticEncounter();
+                }
                 break;
 
             case (GammeStates.BATTLE_STATE):
@@ -110,7 +117,7 @@ public class GameManager : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Backspace))
                 {
-                    ui_manager.panelInventory.SetActive(false);
+                    UI_Manager.panelInventory.SetActive(false);
 
                     curr_GameState = GammeStates.WORLD_STATE;
                 }
@@ -128,27 +135,52 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 
+    public void SearchNewNextScene()
+    {
+        newScene = NewSceneSelector.instance.newSceneSelector;
+    }
+
     public void LoadSceneAfterBattle()
     {
-        SceneManager.LoadScene(lastScene);
+        SearchNewNextScene();
+
+        if (newScene != "")
+        {
+            //nextPlayerPosition = new Vector3(0f, 0f, 0f);
+            SceneManager.LoadScene(newScene);
+            newScene = "";
+        }
+        else
+        {
+            SceneManager.LoadScene(lastScene);
+        }
     }
 
     public void RandomEncounter()
     {
         if (isWalking && canGetEncounter)
         {
-            if (Random.Range(0,100)+1 <= 10)
+            if (Random.Range(0,515)+1 <= 10)
             {
-                Debug.Log("Battle");
+                Debug.Log("Random Battle");
                 gotAttacked = true;
             }
+        }
+    }
+
+    public void StaticEncounter()
+    {
+        if (isStaticEncounter)
+        {
+                Debug.Log("Static Battle");
+                gotAttacked = true;
         }
     }
 
     public void StartBattle()
     {
         //Amount of Enemy
-        enemyAmount = Random.Range(1, curr_region.maxAmountEnemy + 1);
+        enemyAmount = curr_region.maxAmountEnemy;
         //Which Enemy
         for (int i = 0; i < enemyAmount; i++)
         {
@@ -164,5 +196,6 @@ public class GameManager : MonoBehaviour
         isWalking = false;
         canGetEncounter = false;
         gotAttacked = false;
+        isStaticEncounter = false;
     }
 }

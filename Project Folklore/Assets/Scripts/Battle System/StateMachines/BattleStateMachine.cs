@@ -38,6 +38,7 @@ public class BattleStateMachine : MonoBehaviour
     public GameObject actionPanel;
     public GameObject skillPanel;
     public GameObject enemySelectPanel;
+    public GameObject inventoryPanel;
 
     [Header("Player UI: Button")]
     public GameObject actionButton;
@@ -56,12 +57,23 @@ public class BattleStateMachine : MonoBehaviour
 
     [Header("Spawn Points")]
     public List<Transform> spawnPoints = new List<Transform>();
+    public List<Transform> playerSP = new List<Transform>();
 
     private void Awake()
     {
+        //instantiate player
+        for (int i = 0; i < GameManager.instance.playerParty.Count; i++)
+        {
+            GameObject newPlayer = Instantiate(GameManager.instance.playerParty[i], playerSP[i].position, Quaternion.Euler(0f, 90f, 0f)) as GameObject;
+            newPlayer.name = newPlayer.GetComponent<PlayerStateMachine>().player.unitName;
+            newPlayer.GetComponent<PlayerStateMachine>().player.unitName = newPlayer.name;
+            playerInBattle.Add(newPlayer);
+        }
+
+        //instatntiate enemy
         for (int i = 0; i < GameManager.instance.enemyAmount; i++)
         {
-            GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.identity) as GameObject;
+            GameObject newEnemy = Instantiate(GameManager.instance.enemyToBattle[i], spawnPoints[i].position, Quaternion.Euler(0f, -90f, 0f)) as GameObject;
             newEnemy.name = newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName + "_" + (i + 1);
             newEnemy.GetComponent<EnemyStateMachine>().enemy.unitName = newEnemy.name;
             enemyInBattle.Add(newEnemy);
@@ -77,7 +89,7 @@ public class BattleStateMachine : MonoBehaviour
         curr_battleState = BattleStates.WAIT;
         //find go then populate to respective list
         //enemyInBattle.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-        playerInBattle.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+        //playerInBattle.AddRange(GameObject.FindGameObjectsWithTag("Player"));
 
         playerInput = PlayerGUI.ACTIVATE;
 
@@ -104,20 +116,6 @@ public class BattleStateMachine : MonoBehaviour
 
             case (BattleStates.TAKEACTION):
                     GameObject actionPerformer = GameObject.Find(performList[0].attackerName);
-                    
-                    if(performList[0].attackerType == "Player")
-                    {
-                        PlayerStateMachine playerStateMachine = actionPerformer.GetComponent<PlayerStateMachine>();
-                        for (int i = 0; i < enemyInBattle.Count; i++)
-                        {
-                            if (performList[0].attackTarget == enemyInBattle[i])
-                            {
-                                playerStateMachine.enemyTarget = performList[0].attackTarget;
-                                playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
-                                break;
-                            }
-                        }
-                    }
 
                     if (performList[0].attackerType == "Enemy")
                     {
@@ -137,6 +135,14 @@ public class BattleStateMachine : MonoBehaviour
                                 enemyStateMachine.currentState = EnemyStateMachine.TurnState.ACTION;
                             }
                         }
+                    }
+
+                    if (performList[0].attackerType == "Player")
+                    {
+                        PlayerStateMachine playerStateMachine = actionPerformer.GetComponent<PlayerStateMachine>();
+
+                        playerStateMachine.enemyTarget = performList[0].attackTarget;
+                        playerStateMachine.currentState = PlayerStateMachine.TurnState.ACTION;
                     }
 
                     curr_battleState = BattleStates.PERFORMACTION;
@@ -167,27 +173,33 @@ public class BattleStateMachine : MonoBehaviour
                 break;
 
             case (BattleStates.WIN):
-                    Debug.Log("WIN");
-                    for(int i = 0; i < playerInBattle.Count; i++)
-                    {
-                        playerInBattle[i].GetComponent<PlayerStateMachine>().currentState = PlayerStateMachine.TurnState.WAITING;
-                    }
+                //update player stats
+                WinUpdatePlayerStats();
 
-                    GameManager.instance.LoadSceneAfterBattle();
-                    GameManager.instance.curr_GameState = GameManager.GammeStates.WORLD_STATE;
-                    GameManager.instance.enemyToBattle.Clear();
+                Debug.Log("WIN");
+                for (int i = 0; i < playerInBattle.Count; i++)
+                {
+                    playerInBattle[i].GetComponent<PlayerStateMachine>().currentState = PlayerStateMachine.TurnState.WAITING;
+                }
+
+                GameManager.instance.LoadSceneAfterBattle();
+                GameManager.instance.curr_GameState = GameManager.GammeStates.WORLD_STATE;
+                GameManager.instance.enemyToBattle.Clear();
                 break;
 
             case (BattleStates.LOSE):
-                    Debug.Log("LOSE");
-                    for (int i = 0; i < enemyInBattle.Count; i++)
-                    {
-                        enemyInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
-                    }
+                //update player stats
+                LoseUpdatePlayerStats();
 
-                    GameManager.instance.LoadSceneAfterBattle();
-                    GameManager.instance.curr_GameState = GameManager.GammeStates.WORLD_STATE;
-                    GameManager.instance.enemyToBattle.Clear();
+                Debug.Log("LOSE");
+                for (int i = 0; i < enemyInBattle.Count; i++)
+                {
+                    enemyInBattle[i].GetComponent<EnemyStateMachine>().currentState = EnemyStateMachine.TurnState.WAITING;
+                }
+
+                GameManager.instance.LoadSceneAfterBattle();
+                GameManager.instance.curr_GameState = GameManager.GammeStates.WORLD_STATE;
+                GameManager.instance.enemyToBattle.Clear();
                 break;
         }
 
@@ -226,14 +238,14 @@ public class BattleStateMachine : MonoBehaviour
     public void CreateEnemyButtons()
     {
         //clean
-        foreach (GameObject targetBtns in enemySelectButtons)
+        foreach (GameObject targetBtn in enemySelectButtons)
         {
-            Destroy(targetBtns);
+            Destroy(targetBtn);
         }
         enemySelectButtons.Clear();
 
         //create button
-        foreach(GameObject enemy in enemyInBattle)
+        foreach (GameObject enemy in enemyInBattle)
         {
             GameObject newButton = Instantiate(targetButton) as GameObject;
             EnemySelectButton enemySelectButton = newButton.GetComponent<EnemySelectButton>();
@@ -245,8 +257,10 @@ public class BattleStateMachine : MonoBehaviour
 
             enemySelectButton.EnemyPrefab = enemy;
 
-            newButton.transform.SetParent(targetEnemySpacer);
-        }
+            newButton.transform.SetParent(targetEnemySpacer, false);
+
+            enemySelectButtons.Add(newButton);
+        }       
     }
 
     public void Input1()//Action Button
@@ -254,7 +268,9 @@ public class BattleStateMachine : MonoBehaviour
         playerActionSelect.attackerName = playerManageable[0].name;
         playerActionSelect.attackerGO = playerManageable[0];
         playerActionSelect.attackerType = "Player";
+
         playerActionSelect.usedAttack = playerManageable[0].GetComponent<PlayerStateMachine>().player.attackList[0];
+        playerManageable[0].GetComponent<PlayerStateMachine>().player.currentAP += playerManageable[0].GetComponent<PlayerStateMachine>().player.attackList[0].movesetRecoverValue;
 
         actionPanel.SetActive(false);
         enemySelectPanel.SetActive(true);
@@ -266,21 +282,40 @@ public class BattleStateMachine : MonoBehaviour
         playerInput = PlayerGUI.DONE;
     }
 
-    public void Input3(BaseAttack selectedSkill)//selected skill attack
+    public void Input3(MovesetBase selectedSkill)//selected skill attack
     {
         playerActionSelect.attackerName = playerManageable[0].name;
         playerActionSelect.attackerGO = playerManageable[0];
         playerActionSelect.attackerType = "Player";
 
         playerActionSelect.usedAttack = selectedSkill;
+        playerManageable[0].GetComponent<PlayerStateMachine>().player.currentAP -= selectedSkill.movesetCost;
+
         skillPanel.SetActive(false);
         enemySelectPanel.SetActive(true);
+    }
+
+    public void Input4(ItemBase item)//use item
+    {
+
     }
 
     public void SwitchToSkillPanel()//switch to skill attack select
     {
         actionPanel.SetActive(false);
         skillPanel.SetActive(true);
+    }
+
+    public void SwitchToInventoryPanel()//switch to item select
+    {
+        actionPanel.SetActive(false);
+        inventoryPanel.SetActive(true);
+    }
+
+    public void SwitchToActionPanel()//switch back to action select
+    {
+        actionPanel.SetActive(true);
+        inventoryPanel.SetActive(false);
     }
 
     public void PlayerInputDone()
@@ -328,23 +363,92 @@ public class BattleStateMachine : MonoBehaviour
         SkillButton.transform.SetParent(actionSpacer, false);
         actButtons.Add(SkillButton);
 
+        //item button
+        GameObject ItemButton = Instantiate(actionButton) as GameObject;
+        TextMeshProUGUI ItemButtonText = ItemButton.transform.Find("ActionText").gameObject.GetComponent<TextMeshProUGUI>();
+        ItemButtonText.text = "Item";
+        ItemButton.GetComponent<Button>().onClick.AddListener(() => SwitchToInventoryPanel());
+        ItemButton.transform.SetParent(actionSpacer, false);
+        actButtons.Add(ItemButton);
+
         if (playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList.Count > 0)
         {
-            foreach (BaseAttack skillAtk in playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList)
+            foreach (MovesetBase skillAtk in playerManageable[0].GetComponent<PlayerStateMachine>().player.skillList)
             {
-                GameObject skillAtkButton = Instantiate(skillButton) as GameObject;
-                TextMeshProUGUI skillAtkText = skillAtkButton.transform.Find("SkillText").gameObject.GetComponent<TextMeshProUGUI>();
-                skillAtkText.text = skillAtk.attackName;
+                if (skillAtk.movesetCost < playerManageable[0].GetComponent<PlayerStateMachine>().player.currentAP)
+                {
+                    GameObject skillAtkButton = Instantiate(skillButton) as GameObject;
+                    TextMeshProUGUI skillAtkText = skillAtkButton.transform.Find("SkillText").gameObject.GetComponent<TextMeshProUGUI>();
+                    skillAtkText.text = skillAtk.movesetName;
 
-                SkillAttackButton skillBtn = skillAtkButton.GetComponent<SkillAttackButton>();
-                skillBtn.skillToPerform = skillAtk;
-                skillAtkButton.transform.SetParent(skillSpacer, false);
-                actButtons.Add(skillAtkButton);
+                    SkillAttackButton skillBtn = skillAtkButton.GetComponent<SkillAttackButton>();
+                    skillBtn.skillToPerform = skillAtk;
+                    skillAtkButton.transform.SetParent(skillSpacer, false);
+                    actButtons.Add(skillAtkButton);
+                }
+                else
+                {
+                    SkillButton.GetComponent<Button>().interactable = false;
+                }
             }
         }
         else
         {
-            SkillButton.GetComponent<Button>().interactable = false;
+            //SkillButton.GetComponent<Button>().interactable = false;
+        }
+
+        if (InventoryManager.instance.itemList.Count > 0)
+        {
+            //ItemButton.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            ItemButton.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    public void WinUpdatePlayerStats()
+    {
+        foreach (GameObject playerChara in GameManager.instance.playerParty)
+        {
+            for (int i = 0; i < playerInBattle.Count; i++)
+            {
+                //update hp
+                GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentHP = playerInBattle[i].GetComponent<PlayerStateMachine>().player.currentHP;
+
+                //get drop exp
+                GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentEXP += 10f;
+                //check can lvl up
+                if (GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentEXP >= GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.maxEXP)
+                {
+                    //lvl up
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.unitLevel += 1;
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.maxEXP += 20;
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.maxHP += 20;
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.attackStat += 1f;
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.defendStat += 0.5f;
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.speedStat += 0.1f;
+
+                    //reset currentEXP
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentEXP = 0f;
+
+                    //set currentHP to maxHP
+                    GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentHP = GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.maxHP;
+                }
+            }
+        }
+    }
+
+    public void LoseUpdatePlayerStats()
+    {
+        foreach (GameObject playerChara in GameManager.instance.playerParty)
+        {
+            for (int i = 0; i < playerInBattle.Count; i++)
+            {
+                GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentHP = playerInBattle[i].GetComponent<PlayerStateMachine>().player.currentHP;
+
+                GameManager.instance.playerParty[i].GetComponent<PlayerStateMachine>().player.currentEXP -= 10f;
+            }
         }
     }
 }

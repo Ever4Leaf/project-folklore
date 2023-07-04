@@ -89,10 +89,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c1695ceb70f49f4692438b420688a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  L_TriggerButton:
+    m_UseReference: 1
+    m_Action:
+      m_Name: L_Trigger Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: af6cc0d1-bcb7-4d86-8c9e-72fc49b00678
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -3100333369336549072, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  R_TriggerButton:
+    m_UseReference: 1
+    m_Action:
+      m_Name: R_Trigger Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 61b0786b-7257-4f31-95dd-a99a8e38c15c
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8300210601887212373, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   typingSpeed: 0.04
   dialoguePanel: {fileID: 0}
   dialogueText: {fileID: 0}
   displayNameText: {fileID: 0}
+  objectivePanel: {fileID: 0}
+  loadingAnimator: {fileID: 0}
 --- !u!1 &7430842189843416494
 GameObject:
   m_ObjectHideFlags: 0

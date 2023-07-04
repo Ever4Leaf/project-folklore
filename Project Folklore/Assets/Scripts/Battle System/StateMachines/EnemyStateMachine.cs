@@ -36,6 +36,30 @@ public class EnemyStateMachine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //set drop exp
+        switch (enemy.enemyRarity)
+        {
+            case (EnemyBase.Rarity.COMMON):
+                enemy.dropEXP = 10f;
+                break;
+
+            case (EnemyBase.Rarity.UNCOMMON):
+                enemy.dropEXP = 15f;
+                break;
+
+            case (EnemyBase.Rarity.RARE):
+                enemy.dropEXP = 30f;
+                break;
+
+            case (EnemyBase.Rarity.SUPERRARE):
+                enemy.dropEXP = 100f;
+                break;
+        }
+
+        //set animation to idle
+        enemy.charAnimator.SetTrigger("Idle");
+
+        //set action cd value
         cur_cooldown = 0f;
         max_cooldown = max_cooldown / enemy.speedStat;
 
@@ -51,6 +75,9 @@ public class EnemyStateMachine : MonoBehaviour
         switch (currentState)
         {
             case (TurnState.PROCESSING):
+                enemy.charAnimator.SetTrigger("Idle");
+                enemy.charAnimator.GetComponent<Transform>().rotation = this.gameObject.GetComponent<Transform>().rotation;
+
                 ProgressBar();
                 break;
 
@@ -62,6 +89,10 @@ public class EnemyStateMachine : MonoBehaviour
 
             case (TurnState.WAITING):
                 //idle state
+                //set animation to idle
+                enemy.charAnimator.SetTrigger("Idle");
+                enemy.charAnimator.GetComponent<Transform>().rotation = this.gameObject.GetComponent<Transform>().rotation;
+
                 break;
 
             case (TurnState.ACTION):
@@ -104,6 +135,7 @@ public class EnemyStateMachine : MonoBehaviour
                     }
 
                     //change color or play animation
+                    enemy.charAnimator.SetTrigger("Dead");
                     this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
 
                     //set enemyAlive=false
@@ -159,11 +191,11 @@ public class EnemyStateMachine : MonoBehaviour
         Vector3 playerTargetPosition = playerTarget.transform.position + new Vector3(1.25f, 0f, 0f);
         while (MoveTowardTarget(playerTargetPosition)) { yield return null; }
 
-        //wait
-        yield return new WaitForSeconds(0.5f);
-        
         //do damage
         DoDamage();
+
+        //wait
+        yield return new WaitForSeconds(1.5f);
         
         //animate back to starting position
         Vector3 startPos = startingPosition;
@@ -203,15 +235,22 @@ public class EnemyStateMachine : MonoBehaviour
     //do damage
     public void DoDamage()
     {
-        float calc_enemyDmg = enemy.attackStat + battleStateMachine.performList[0].usedAttack.attackDamage;
+        //set animation to attack
+        enemy.charAnimator.SetTrigger("Attack");
+        AudioManager.instance.PlaySFX(6);
 
+        float calc_enemyDmg = battleStateMachine.performList[0].usedAttack.movesetValue * enemy.attackStat * enemy.unitLevel;
         playerTarget.GetComponent<PlayerStateMachine>().TakeDamage(calc_enemyDmg);
     }
 
     //take damage
     public void TakeDamage(float getDamageAmount)
     {
-        enemy.currentHP -= getDamageAmount;
+        //set animation to take damage
+        enemy.charAnimator.SetTrigger("Hit");
+        AudioManager.instance.PlaySFX(2);
+
+        enemy.currentHP -= (getDamageAmount / enemy.defendStat);
         if(enemy.currentHP <= 0)
         {
             enemy.currentHP = 0;

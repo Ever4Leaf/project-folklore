@@ -12,6 +12,8 @@ public class InventoryManager : MonoBehaviour
     public Transform itemContent;
     public GameObject inventoryItem;
 
+    public InventoryItemController[] inventoryItems;
+
     private void Awake()
     {
         //check if instance exist
@@ -30,14 +32,10 @@ public class InventoryManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    void Update()
     {
-        itemContent = GameObject.Find("Canvas").transform.Find("Panel Inventory").transform.Find("Inventory Scroll View").transform.Find("Viewport").transform.Find("Content");
+        itemContent = GameObject.Find("Canvas").transform.Find("Panel Inventory").transform.Find("Inventory Scroll View").transform.Find("Viewport Inventory").transform.Find("Content Inventory");
 
-    }
-
-    private void Update()
-    {
         ListItems();
     }
 
@@ -68,5 +66,17 @@ public class InventoryManager : MonoBehaviour
             itemName.text = item.itemName;
             itemIcon.sprite = item.itemIcon;
         }
+
+        //SetInventoryItems();
     }
+
+    public void SetInventoryItems()
+    {
+        inventoryItems = itemContent.GetComponentsInChildren<InventoryItemController>();
+
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            inventoryItems[i].AddItem(itemList[i]);
+        } 
+    } 
 }

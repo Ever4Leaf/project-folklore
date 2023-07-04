@@ -10,6 +10,6 @@ public class ItemBase : ScriptableObject
     public float itemValue;
     public Sprite itemIcon;
 
-    public enum type { HEALING, STATUS_RECOVERY}
+    public enum type { HEALING, STATUS_RECOVERY }
     public type itemType;
 }

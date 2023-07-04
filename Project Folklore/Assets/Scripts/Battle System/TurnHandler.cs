@@ -11,5 +11,5 @@ public class TurnHandler
     public GameObject attackTarget; //Attacker Target
 
     //what attack is performed
-    public BaseAttack usedAttack;
+    public MovesetBase usedAttack;
 }

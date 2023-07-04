@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillAttackButton : MonoBehaviour
 {
-    public BaseAttack skillToPerform;
+    public MovesetBase skillToPerform;
 
     public void CastSkillAttack()
     {
